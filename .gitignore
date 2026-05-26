@@ -37,3 +37,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# 个人文档（简历、照片等，不提交）
+/docs/
+
+# LaTeX 编译残留
+docs/*.aux
+docs/*.log
+docs/*.out
