@@ -75,7 +75,11 @@ public class ChatService {
 
             @Override
             public void onCompleteResponse(ChatResponse complete) {
-                saveHistory(sessionId, userMessage, fullResponse.toString());
+                String responseText = fullResponse.toString();
+                log.info("流式完成: sessionId={}, 回复长度={}, 内容预览={}",
+                        sessionId, responseText.length(),
+                        responseText.length() > 200 ? responseText.substring(0, 200) + "..." : responseText);
+                saveHistory(sessionId, userMessage, responseText);
                 sink.tryEmitComplete();
             }
 
