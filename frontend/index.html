@@ -7,30 +7,54 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f5f5f5; height: 100vh; display: flex; flex-direction: column; }
-        header { background: #1a5276; color: #fff; padding: 12px 20px; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 12px; }
+        header { background: #1a5276; color: #fff; padding: 10px 20px; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 12px; }
         header span { font-size: 12px; opacity: .7; }
         header .spacer { flex: 1; }
-        #newChatBtn { padding: 6px 14px; background: rgba(255,255,255,.2); color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: 4px; cursor: pointer; font-size: 13px; }
-        #newChatBtn:hover { background: rgba(255,255,255,.3); }
+        header button { padding: 6px 14px; background: rgba(255,255,255,.2); color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: 4px; cursor: pointer; font-size: 13px; }
+        header button:hover { background: rgba(255,255,255,.3); }
+
+        #toolbar { background: #fff; padding: 8px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e0e0e0; max-width: 900px; width: 100%; margin: 0 auto; font-size: 13px; }
+        #toolbar label { cursor: pointer; color: #555; }
+        #toolbar select { padding: 4px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
+        #fileInfo { color: #1a5276; font-size: 12px; display: none; }
+        #fileInput { display: none; }
+
         #messages { flex: 1; overflow-y: auto; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 12px; max-width: 900px; width: 100%; margin: 0 auto; }
         .msg { max-width: 75%; padding: 10px 14px; border-radius: 8px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
         .msg.user { align-self: flex-end; background: #1a5276; color: #fff; }
         .msg.assistant { align-self: flex-start; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
         .msg.assistant.streaming { border-left: 2px solid #1a5276; }
-        footer { background: #fff; padding: 12px 16px 16px; display: flex; gap: 8px; border-top: 1px solid #e0e0e0; max-width: 900px; width: 100%; margin: 0 auto; }
+        .msg.system { align-self: center; font-size: 12px; color: #999; background: none; box-shadow: none; }
+
+        footer { background: #fff; padding: 10px 16px 14px; display: flex; gap: 8px; border-top: 1px solid #e0e0e0; max-width: 900px; width: 100%; margin: 0 auto; }
         #input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; resize: none; font-family: inherit; }
         #input:focus { outline: none; border-color: #1a5276; }
-        button { padding: 10px 20px; background: #1a5276; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
-        button:disabled { opacity: .5; cursor: not-allowed; }
-        #status { text-align: center; font-size: 12px; color: #999; padding: 4px; }
+        footer button { padding: 10px 20px; background: #1a5276; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; white-space: nowrap; }
+        footer button:disabled { opacity: .5; cursor: not-allowed; }
+        #status { text-align: center; font-size: 12px; color: #999; padding: 2px; }
     </style>
 </head>
 <body>
     <header>
         InfoPilot <span>企业文档智能助手</span>
         <span class="spacer"></span>
-        <button id="newChatBtn" onclick="newSession()">＋ 新对话</button>
+        <button onclick="newSession()">＋ 新对话</button>
     </header>
+
+    <div id="toolbar">
+        <label>模式：
+            <select id="modeSelect" onchange="switchMode()">
+                <option value="chat">对话</option>
+                <option value="rag">文档问答</option>
+            </select>
+        </label>
+        <label id="uploadBtn" style="display:none">
+            <button onclick="document.getElementById('fileInput').click()" style="padding:4px 12px;font-size:12px;">上传文档</button>
+        </label>
+        <input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.md,.ppt,.pptx,.xls,.xlsx" onchange="uploadFile()">
+        <span id="fileInfo"></span>
+    </div>
+
     <div id="messages"></div>
     <div id="status">就绪</div>
     <footer>
@@ -43,10 +67,22 @@ const messagesEl = document.getElementById('messages');
 const inputEl = document.getElementById('input');
 const btnEl = document.getElementById('btn');
 const statusEl = document.getElementById('status');
+const modeSelect = document.getElementById('modeSelect');
+const uploadBtn = document.getElementById('uploadBtn');
+const fileInfo = document.getElementById('fileInfo');
 
-// 会话 ID，同一浏览器窗口内复用
+const API = location.hostname === 'localhost' ? 'http://localhost:8080' : '';
+
+let currentMode = 'chat';
 let sessionId = sessionStorage.getItem('infopilot-sid') || crypto.randomUUID();
 sessionStorage.setItem('infopilot-sid', sessionId);
+
+function switchMode() {
+    currentMode = modeSelect.value;
+    uploadBtn.style.display = currentMode === 'rag' ? '' : 'none';
+    fileInfo.style.display = 'none';
+    inputEl.placeholder = currentMode === 'rag' ? '输入问题，基于已上传文档回答...' : '输入消息...';
+}
 
 function newSession() {
     sessionId = crypto.randomUUID();
@@ -64,6 +100,27 @@ function addMsg(role, text, cls = '') {
     return div;
 }
 
+async function uploadFile() {
+    const file = document.getElementById('fileInput').files[0];
+    if (!file) return;
+
+    statusEl.textContent = '上传中...';
+    const form = new FormData();
+    form.append('file', file);
+
+    try {
+        const resp = await fetch(`${API}/api/doc/upload`, { method: 'POST', body: form });
+        const text = await resp.text();
+        fileInfo.style.display = '';
+        fileInfo.textContent = '✓ ' + text;
+        addMsg('system', '文档已上传: ' + file.name + ' (' + text + ')');
+        statusEl.textContent = '就绪';
+    } catch (e) {
+        fileInfo.textContent = '✗ 上传失败: ' + e.message;
+        statusEl.textContent = '上传失败';
+    }
+}
+
 async function send() {
     const msg = inputEl.value.trim();
     if (!msg) return;
@@ -71,32 +128,34 @@ async function send() {
     inputEl.value = '';
     inputEl.disabled = btnEl.disabled = true;
     statusEl.textContent = '思考中...';
-
     addMsg('user', msg);
-    // 流式
-    const assistantDiv = addMsg('assistant', '', 'streaming');
 
+    if (currentMode === 'rag') {
+        await sendRag(msg);
+    } else {
+        await sendChat(msg);
+    }
+
+    inputEl.disabled = btnEl.disabled = false;
+    inputEl.focus();
+}
+
+async function sendChat(msg) {
+    const assistantDiv = addMsg('assistant', '', 'streaming');
     try {
-        const apiBase = location.hostname === 'localhost' ? 'http://localhost:8080' : '';
-        const resp = await fetch(`${apiBase}/api/chat/stream?sessionId=${encodeURIComponent(sessionId)}&message=${encodeURIComponent(msg)}`);
+        const resp = await fetch(`${API}/api/chat/stream?sessionId=${encodeURIComponent(sessionId)}&message=${encodeURIComponent(msg)}`);
         const reader = resp.body.getReader();
         const decoder = new TextDecoder();
         let buffer = '';
-
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
             buffer += decoder.decode(value, { stream: true });
-
-            // 解析 SSE: "data:xxx\n\n"
             const lines = buffer.split('\n\n');
-            buffer = lines.pop(); // 保留不完整的最后一段
-
+            buffer = lines.pop();
             for (const line of lines) {
                 const dataLines = line.split('\n').filter(l => l.startsWith('data:'));
-                for (const dl of dataLines) {
-                    assistantDiv.textContent += dl.slice(5);
-                }
+                for (const dl of dataLines) assistantDiv.textContent += dl.slice(5);
             }
             messagesEl.scrollTop = messagesEl.scrollHeight;
         }
@@ -105,12 +164,25 @@ async function send() {
         statusEl.textContent = '就绪';
     } catch (e) {
         assistantDiv.textContent = '错误: ' + e.message;
+        assistantDiv.classList.remove('streaming');
         statusEl.textContent = '请求失败';
     }
-
-    inputEl.disabled = btnEl.disabled = false;
-    inputEl.focus();
 }
+
+async function sendRag(msg) {
+    const assistantDiv = addMsg('assistant', '');
+    try {
+        const resp = await fetch(`${API}/api/doc/search?q=${encodeURIComponent(msg)}`);
+        assistantDiv.textContent = await resp.text();
+        statusEl.textContent = '就绪';
+    } catch (e) {
+        assistantDiv.textContent = '错误: ' + e.message;
+        statusEl.textContent = '请求失败';
+    }
+}
+
+// 初始化
+switchMode();
 </script>
 </body>
 </html>
