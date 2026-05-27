@@ -49,6 +49,12 @@
             <version>${langchain4j.version}</version>
         </dependency>
 
+        <!-- LangChain4j Apache Tika 文档解析 -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-document-parser-apache-tika</artifactId>
+        </dependency>
+
         <!-- LangChain4j Reactor（Flux<String> 流式支持） -->
         <dependency>
             <groupId>dev.langchain4j</groupId>

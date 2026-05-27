@@ -73,6 +73,12 @@
                 <version>${langchain4j-beta.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-document-parser-apache-tika</artifactId>
+                <version>${langchain4j-beta.version}</version>
+            </dependency>
+
             <!-- 智谱 AI 嵌入模型（社区模块，版本独立管理） -->
             <dependency>
                 <groupId>dev.langchain4j</groupId>
