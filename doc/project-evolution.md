@@ -36,19 +36,19 @@
 
 - **理由**：
   1. **市场占有率**：LangChain4j 开发者采用率 68% vs Spring AI 52%（JetBrains 2025 Q1 调研）
-  2. **Agent 成熟度**：LangChain4j 有完整的 ReAct / Plan-Execute / 多 Agent 协作，Spring AI 2.0 Agent 仍较基础。简历上写 Agent 能力，LangChain4j 能撑住
+  2. **Agent 成熟度**：LangChain4j 有完整的 ReAct / Plan-Execute / 多 Agent 协作，Spring AI 2.0 Agent 仍较基础，项目需要生产可用的 Agent 框架
   3. **国产模型支持**：LangChain4j 对 DeepSeek、智谱、通义千问等有 50+ 模型适配（含社区模块），Spring AI 仅 20+
   4. **知识可迁移**：LangChain4j 的概念体系与 Python LangChain 一脉相承，不局限于 Java 生态
   5. **有现成参考**：JeecgBoot 的 AI 模块就是 LangChain4j 实现，源码可对照学习
 
-### 决定：放弃按部就班学习，先出 MVP 应对招聘会
+### 决定：采用 MVP 优先策略，先上线核心链路
 
-- **理由**：原计划按 6 阶段逐步学习，但招聘会在即。策略调整为"先搭骨架写简历，招聘会后补细节"
-- **影响**：简历上 InfoPilot 项目从"研读 JeecgBoot"改为"独立开发中"，先上线核心链路（对话 + RAG + 工具调用），高级特性标注"规划中"
+- **理由**：完整实现六个阶段需要 3-4 个月。改为先搭骨架——对话 + RAG + 工具调用——让项目尽早可运行、可演示，高级特性（混合检索、Eval、Harness）在后续迭代中补全
+- **影响**：核心链路（对话 + RAG + 工具调用）优先实现，高级特性标注"规划中"
 
-### 决定：简历项目顺序调整为 AI 优先
+### 决定：InfoPilot 作为项目展示的核心，优先于 Hawkeye Cloud
 
-- **理由**：投递 AI Agent 岗位，面试官第一眼应看到 InfoPilot（AI）而非 Hawkeye Cloud（微服务）
+- **理由**：InfoPilot 聚焦 AI Agent，是当前技术方向的核心项目。项目文档和 README 中将 InfoPilot 作为主推项目
 - 技术栈已同步更新：Spring AI → LangChain4j
 
 ### 依赖清单（当前版本）
@@ -73,7 +73,7 @@
 ### 决定：上下文管理走 Service 层手动管理 + Redis 持久化，不用 LangChain4j 内置 ChatMemory
 
 - **理由**：
-  1. **面试可讲性**：手动实现能讲清"滑动窗口 + Token 预算 + 摘要压缩"的每一步原理。`MessageWindowChatMemory.withMaxMessages(10)` 一行搞定但面试官追问"超窗口后怎么处理"时答不上来
+  1. **原理透明**：手动实现能理解每一步的细节，`MessageWindowChatMemory.withMaxMessages(10)` 一行搞定但遇到边界场景（超窗口、Token 预算）无法定制
   2. **定制灵活度**：内置 ChatMemory 没有 Token 预算感知能力——它只管消息条数，不管每条消息多少 token。我们需要 70% 水位预警 + 异步压缩，这些必须手写
   3. **旁路摘要不阻塞主链路**：所有大厂方案（Google ADK、Claude Code）都把压缩放在异步旁路，LangChain4j 的同步 ChatMemory 不支持这种模式
 

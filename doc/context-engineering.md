@@ -161,7 +161,7 @@ session:{id}:ttl        → 1 小时自动过期
 
 | 选择 | 理由 | 放弃的方案 |
 |---|---|---|
-| 手动 Service 层管理，不用 AiServices 内置 ChatMemory | 面试能讲清原理；能自定义 Token 预算和裁剪逻辑 | `MessageWindowChatMemory.withMaxMessages(10)` 一行搞定但黑盒 |
+| 手动 Service 层管理，不用 AiServices 内置 ChatMemory | 原理透明，能自定义 Token 预算和裁剪逻辑 | `MessageWindowChatMemory.withMaxMessages(10)` 一行搞定但黑盒 |
 | V1 先做纯滑动窗口，不做摘要 | 快速跑通链路，摘要压缩需要多一次 LLM 调用，增加延迟和复杂度 | 一步到位的完整摘要方案 |
 | Redis 而非内存 Map | 服务重启不丢对话；为后续分布式做准备 | `ConcurrentHashMap` 开发更简单但重启即失 |
 | 先不做语义记忆 | 向量检索在阶段 4 才引入；用户偏好需要积累足够数据才有价值 | 一步到位的三层记忆架构 |
