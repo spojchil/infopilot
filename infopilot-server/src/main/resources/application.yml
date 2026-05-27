@@ -58,7 +58,15 @@ infopilot:
     password: ${DB_PASSWORD:postgres}
     table: embeddings
 
-# LangChain4j 日志（开发阶段开启）
+# 日志配置
 logging:
+  file:
+    path: ./logs
+    name: ${logging.file.path}/infopilot.log
   level:
-    dev.langchain4j: DEBUG
+    dev.langchain4j: INFO
+    io.github.spojchil: DEBUG
+  logback:
+    rollingpolicy:
+      max-file-size: 5MB
+      max-history: 3
