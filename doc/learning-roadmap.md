@@ -66,7 +66,7 @@
 - **正式开发 + 复杂任务：Claude Sonnet** — Agent / 复杂 Prompt / 长文档分析场景的当前首选，Tool Use 最成熟
 - **通用 + 性价比：GPT-4o-mini** — 翻译、摘要、格式转换等中低难度任务，成本约为 Sonnet 的 1/20
 
-核心原则：**不要写死某个厂商。** Spring AI 提供统一的 ChatModel 接口，换模型只需改配置。从第一天就习惯"模型是可替换的"。
+核心原则：**不要写死某个厂商。** LangChain4j（本项目选用）和 Spring AI 都提供统一的模型接口，换模型只需改配置。从第一天就习惯"模型是可替换的"。
 
 ### 核心概念
 
@@ -77,14 +77,16 @@
 - **🔧 [OpenAI Tokenizer Playground](https://platform.openai.com/tokenizer)** — 输入任意文字，直观看到 token 切分方式。理解 token 最快的方式，5 分钟建立直觉
 - **📄 [Anthropic — Models Overview](https://docs.anthropic.com/en/docs/about-claude/models/overview)** — 各模型的 context window、能力差异对比。API 调用的起点，直接看这里选模型
 - **🎬 [Andrej Karpathy — Intro to LLMs（1小时）](https://www.youtube.com/watch?v=zjkBMFhNj_g)** — 前 OpenAI 核心成员讲解 LLM 是什么。只看前 30 分钟建立直觉，不需要懂数学。这阶段唯一推荐的视频
-- **📄 [Spring AI — Chat Model API](https://docs.spring.io/spring-ai/reference/api/chatmodel.html)** — Java 生态起点。同步调用（`call()`）和流式调用（`stream()` → `Flux<String>`）两种模式都在这里，马上能跑起来
+- **📄 [LangChain4j — Chat Language Model](https://docs.langchain4j.dev/tutorials/chat-language-model)** — Java 生态起点（本项目选用）。`ChatLanguageModel.generate()` 同步调用，`StreamingChatLanguageModel` 流式调用，马上能跑起来
+- **📄 [Spring AI — Chat Model API](https://docs.spring.io/spring-ai/reference/api/chatmodel.html)** — 另一主流选择。同步调用（`call()`）和流式调用（`stream()` → `Flux<String>`）两种模式都在这里
 
 ### 本地模型替代方案（可选，但强烈建议了解）
 
-企业级场景常有数据合规要求，完全依赖云端 API 不现实。Ollama 让你在本地跑开源模型（Llama、Qwen、DeepSeek），Spring AI 只需修改 `base-url` 配置即可无缝切换：
+企业级场景常有数据合规要求，完全依赖云端 API 不现实。Ollama 让你在本地跑开源模型（Llama、Qwen、DeepSeek），LangChain4j 和 Spring AI 只需修改 `baseUrl` 配置即可无缝切换：
 
 - **🔧 [Ollama 官网](https://ollama.com)** — 本地运行大模型，类似 Docker 管理镜像的方式管理模型，`ollama run llama3` 一行命令启动
-- **📄 [Spring AI — Ollama 官方文档](https://docs.spring.io/spring-ai/reference/api/chat/ollama-chat.html)** — 配置 `spring.ai.ollama.base-url` 后，代码层面与调用 OpenAI 完全一致，无需改业务逻辑
+- **📄 [LangChain4j — Ollama 集成](https://docs.langchain4j.dev/integrations/language-models/ollama)** — 配置 `baseUrl` 后，代码层面与调用 OpenAI 完全一致，无需改业务逻辑
+- **📄 [Spring AI — Ollama 官方文档](https://docs.spring.io/spring-ai/reference/api/chat/ollama-chat.html)** — 配置 `spring.ai.ollama.base-url` 后，同样无缝切换
 
 ### ⚠️ 成本意识（从第一天开始）
 
@@ -166,19 +168,20 @@ Prompt 写完不是凭感觉判断好不好，而是用测试用例验证：对 
 - **📄 ⭐ [Anthropic — Tool Use Overview](https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview)** — 完整讲解 tools 参数如何声明、模型返回 tool_use block、如何回传 tool_result。这是核心，反复读到能默写流程
 - **📄 ⭐ [OpenAI — Structured Outputs](https://platform.openai.com/docs/guides/structured-outputs)** — response_format + JSON Schema 严格模式的完整文档。完全替代「靠 prompt 让模型输出 JSON」的旧做法
 - **📦 [anthropics/courses — Tool Use 系列 Notebook](https://github.com/anthropics/courses/tree/master/tool_use)** — 配套练习，从单工具到多工具、到工具链，循序渐进。跑完这个系列，概念就全通了
-- **📄 ⭐ [Spring AI — Streaming Chat Client](https://docs.spring.io/spring-ai/reference/api/chatclient.html)** — `chatClient.stream().content()` 返回 `Flux<String>`，配合 Spring WebFlux 实现 SSE。这是 Java 后端做 AI 必须掌握的异步模型，阻塞等待在生产不可接受
+- **📄 ⭐ [LangChain4j — Streaming](https://docs.langchain4j.dev/tutorials/streaming)** — `StreamingChatLanguageModel.generate()` 通过 `TokenStream` 回调逐 token 推送，配合 Spring WebFlux 的 `SseEmitter` 实现 SSE。本项目选用此方案
+- **📄 [Spring AI — Streaming Chat Client](https://docs.spring.io/spring-ai/reference/api/chatclient.html)** — `chatClient.stream().content()` 返回 `Flux<String>`，配合 Spring WebFlux 实现 SSE。另一主流方案
 
 ### 为什么流式输出在这里学？
 
-LLM 响应慢（平均 3~10 秒），阻塞等待会让用户体验极差。`stream()` + SSE 让第一个 token 在 200ms 内就到达前端。Spring AI 的 `StreamingChatModel` 返回 `Flux<ChatResponse>`，WebMVC 和 WebFlux 可以共存于同一个应用——加 `spring-boot-starter-webflux` 依赖即可，不需要整体迁移到响应式。
+LLM 响应慢（平均 3~10 秒），阻塞等待会让用户体验极差。`stream()` + SSE 让第一个 token 在 200ms 内就到达前端。LangChain4j 的 `StreamingChatLanguageModel` 通过回调逐 token 推送，Spring AI 的 `StreamingChatModel` 返回 `Flux<ChatResponse>`，两者都支持与 WebMVC 共存——加 `spring-boot-starter-webflux` 依赖即可，不需要整体迁移到响应式。
 
 ### Java 生态对照
 
-| 能力 | Anthropic/OpenAI API | Spring AI Java 实现 |
-|---|---|---|
-| 工具调用声明 | `tools` 参数 | `@Tool` 注解方法 / `FunctionCallback` |
-| 结构化输出 | JSON Schema | `BeanOutputConverter<YourDTO>` |
-| 流式响应 | SSE stream | `chatClient.stream().content()` → `Flux<String>` |
+| 能力 | Anthropic/OpenAI API | LangChain4j 实现（本项目） | Spring AI 实现 |
+|---|---|---|---|
+| 工具调用声明 | `tools` 参数 | `@Tool` 注解方法 | `@Tool` 注解 / `FunctionCallback` |
+| 结构化输出 | JSON Schema | `AiServices` + 返回类型约束 | `BeanOutputConverter<YourDTO>` |
+| 流式响应 | SSE stream | `StreamingChatLanguageModel` + 回调 | `chatClient.stream().content()` → `Flux<String>` |
 
 ### 阶段目标
 
@@ -198,9 +201,11 @@ LLM 响应慢（平均 3~10 秒），阻塞等待会让用户体验极差。`str
 
 ### 学习资料
 
-- **📦 ⭐ [langchain-ai/rag-from-scratch](https://github.com/langchain-ai/rag-from-scratch)** — LangChain 官方出品，每个概念一个独立 Notebook，从 Naive RAG 到高级优化。教程用 Python 编写，**重点是理解流程和思路，后续用 Spring AI 在 Java 中实现**，不要陷入 Python 框架细节
-- **📄 ⭐ [Spring AI — Vector Database 文档](https://docs.spring.io/spring-ai/reference/api/vectordbs.html)** — Spring AI 支持 PGVector、Chroma、Milvus 等主流向量库，用熟悉的 Spring 生态直接上手做 RAG
+- **📦 ⭐ [langchain-ai/rag-from-scratch](https://github.com/langchain-ai/rag-from-scratch)** — LangChain 官方出品，每个概念一个独立 Notebook，从 Naive RAG 到高级优化。教程用 Python 编写，**重点是理解流程和思路，后续用 LangChain4j 或 Spring AI 在 Java 中实现**，不要陷入 Python 框架细节
+- **📄 ⭐ [LangChain4j — Embedding Store](https://docs.langchain4j.dev/tutorials/embedding-store)** — LangChain4j 向量存储接口，支持 PGVector、Chroma、Milvus 等主流向量库，本项目选用 PGVector
+- **📄 [Spring AI — Vector Database 文档](https://docs.spring.io/spring-ai/reference/api/vectordbs.html)** — Spring AI 向量库接口，同样支持 PGVector 等，另一主流选择
 - **📦 [Spring AI — RAG with Docling 实战](https://github.com/spring-ai-community/awesome-spring-ai)** — Spring AI Community 维护的资料汇总，含 Docling 解析 PDF/Word、RAG 端到端 Java 实现等多个实战教程
+- **📦 [LangChain4j — RAG 教程](https://docs.langchain4j.dev/tutorials/rag)** — LangChain4j 官方 RAG 文档，含文档加载、切分、嵌入、检索全流程
 - **📦 ⭐ [confident-ai/deepeval](https://github.com/confident-ai/deepeval)** — RAG 评测框架，类似 Pytest 的用法。提供 Faithfulness（忠实度）、Contextual Recall（检索召回率）、Answer Relevancy 等核心指标。**没有 Eval，chunk 策略和 rerank 调优就是在盲飞**
 
 ### 向量库选型（Java 后端视角）
@@ -211,7 +216,7 @@ LLM 响应慢（平均 3~10 秒），阻塞等待会让用户体验极差。`str
 | **Chroma** | 本地原型验证 | 低 |
 | **Milvus / Weaviate** | 亿级向量，生产大规模 | 高 |
 
-> 建议从 PGVector 开始，它的运维成本最低，Spring AI 支持最完善。
+> 建议从 PGVector 开始，它的运维成本最低，LangChain4j 和 Spring AI 都有完善支持。
 
 ### Embedding 模型选型
 
@@ -227,7 +232,7 @@ LLM 响应慢（平均 3~10 秒），阻塞等待会让用户体验极差。`str
 
 纯向量检索擅长语义匹配，但关键词精确匹配（产品编号、错误码、人名）不如传统全文检索。工程上公认的最佳实践是**混合检索**——向量检索做语义召回，BM25 做关键词召回，再把两路结果融合排序。
 
-Spring AI 目前的向量检索支持很成熟，但对 BM25 的原生集成还在早期阶段。目前有两个务实路径：
+LangChain4j 和 Spring AI 的向量检索支持都很成熟，但对 BM25 的原生集成还在早期阶段。目前有两个务实路径：
 
 - **轻量方案**：用 PGVector 的全文搜索能力（PostgreSQL 内置 `tsvector`），与向量检索在同一查询中联合，走 SQL 层面的融合。学习成本最低，Java 后端直接用 JPA/Native Query
 - **完整方案**：独立部署 Elasticsearch 做 BM25 检索，向量库用 PGVector / Milvus，在应用层做两路结果融合和重排。检索质量更高，但架构多了一个组件
@@ -241,9 +246,7 @@ Spring AI 目前的向量检索支持很成熟，但对 BM25 的原生集成还�
 在多租户场景下存在数据泄露风险，这不是性能问题，是正确性问题。
 
 解法：向量检索前加结构化过滤条件（`user_id`、`tenant_id`、时间范围等），
-先缩小候选集，再在子集里做相似度计算。Spring AI 的向量库接口支持
-`FilterExpressionBuilder`，PGVector 底层是 SQL WHERE 条件，
-对 Java 后端几乎没有学习成本。
+先缩小候选集，再在子集里做相似度计算。LangChain4j 的 `EmbeddingStore` 接口和 Spring AI 的 `FilterExpressionBuilder` 都支持元数据过滤，PGVector 底层是 SQL WHERE 条件，对 Java 后端几乎没有学习成本。
 
 ### ⚠️ RAG 调优必须有 Eval 指标
 
@@ -286,23 +289,21 @@ Agent 能调用工具意味着它能造成真实影响。业务 Agent 的安全�
 3. **工具失败怎么回滚？** Agent 多步推理中，步骤 3 成功、步骤 4 失败时，
    步骤 3 的副作用怎么撤销？设计工具时要同时设计对应的撤销接口。
 
-**Java 生态落地：** 在 Spring AI 的 Tool 定义里加 `@Confirmable`（或自定义注解），
-拦截不可逆操作跳转确认流程；用 Spring AOP 统一记录工具调用审计日志，
-出问题可回放整条执行链路。
+**Java 生态落地：** 在 LangChain4j 的 `@Tool` 方法或 Spring AI 的 Tool 定义里加 `@Confirmable`（或自定义注解），拦截不可逆操作跳转确认流程；用 Spring AOP 统一记录工具调用审计日志，出问题可回放整条执行链路。
 
 ### 学习资料
 
 - **📄 ⭐ [Anthropic — Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)** — Agent 设计的五种核心模式（Prompt Chaining / Routing / Parallelization / Orchestrator-Worker / Evaluator-Optimizer）。比「ReAct 原始论文」更实用，直接告诉你什么时候用哪种模式
-- **📄 ⭐ [Spring AI — Building Effective Agents（Java 实现）](https://docs.spring.io/spring-ai/reference/api/effective-agents.html)** — Spring 团队基于 Anthropic 的五种模式，提供 Java 代码实现。Anthropic 文档讲原理，Spring AI 文档给 Java 落地，两个配套阅读
-- **📄 [LangChain4j — AI Services（Java 生态）](https://docs.langchain4j.dev/tutorials/ai-services)** — Java 版 Agent 框架，用注解方式定义工具，与 Spring 无缝集成。注意：LangChain4j API 迭代较快，以官方文档为准，不要依赖旧博客
+- **📄 ⭐ [LangChain4j — AI Services（Java 生态）](https://docs.langchain4j.dev/tutorials/ai-services)** — Java 版 Agent 框架（本项目选用），用 `@Tool` 注解定义工具，`AiServices` 声明式构建 Agent，与 Spring 无缝集成。注意：LangChain4j API 迭代较快，以官方文档为准，不要依赖旧博客
+- **📄 [Spring AI — Building Effective Agents（Java 实现）](https://docs.spring.io/spring-ai/reference/api/effective-agents.html)** — Spring 团队基于 Anthropic 的五种模式，提供 Java 代码实现。Anthropic 文档讲原理，Spring AI 文档给 Java 落地，两个配套阅读
 
 ### Agent 框架选型（Java 生态）
 
 | 框架 | 适合场景 | 稳定性 |
 |---|---|---|
-| **Spring AI** | Spring Boot 团队，优先选择 | 高，Spring 生态背书 |
-| **LangChain4j** | 需要更灵活编排，不绑定 Spring | 中（迭代较快） |
-| 两者不互斥 | Spring AI 做模型接入，LangChain4j 做复杂编排 | — |
+| **LangChain4j** | Agent 能力成熟，国产模型支持好，不绑定 Spring（本项目选用） | 中高（迭代较快，开发者采用率 68%） |
+| **Spring AI** | Spring Boot 团队，Spring 生态原生集成 | 高，Spring 生态背书 |
+| 两者不互斥 | 可按需组合使用，Spring 做基础架构，LangChain4j 做 Agent 编排 | — |
 
 ### 阶段目标
 
@@ -326,7 +327,8 @@ Agent 能调用工具意味着它能造成真实影响。业务 Agent 的安全�
 
 **可观测性 & 链路追踪**
 
-- **📄 ⭐ [Langfuse — Spring AI 集成文档](https://langfuse.com/integrations/frameworks/spring-ai)** — LLM 链路追踪工具，开源可自托管（MIT 协议）。通过 Spring Boot Actuator + Micrometer + OpenTelemetry 接入，无需改业务代码，即可在 Langfuse UI 中看到每次 LLM 调用的 Prompt、Response、Token 消耗、耗时。**从 Agent 开始就应该接入，否则调试是灾难**
+- **📄 ⭐ [Langfuse — LangChain4j 集成](https://langfuse.com/integrations/frameworks/langchain4j)** — LLM 链路追踪工具，开源可自托管（MIT 协议）。LangChain4j 通过 `LangChain4j` 回调直接集成，Spring AI 通过 Actuator + Micrometer + OpenTelemetry 接入，无需改业务代码，即可在 Langfuse UI 中看到每次 LLM 调用的 Prompt、Response、Token 消耗、耗时。**从 Agent 开始就应该接入，否则调试是灾难**
+- **📄 [Langfuse — Spring AI 集成文档](https://langfuse.com/integrations/frameworks/spring-ai)** — Spring AI 的 Langfuse 集成方式
 - **📦 [arize-ai/phoenix](https://github.com/Arize-ai/phoenix)** — 另一个开源 LLM 可观测性工具（Elastic License），更侧重 Agent 评估和实验分析。Langfuse 偏生产运维，Phoenix 偏开发调试，两者定位互补
 
 **Evaluation 体系**
@@ -336,7 +338,8 @@ Agent 能调用工具意味着它能造成真实影响。业务 Agent 的安全�
 
 **工程化实践**
 
-- **📦 ⭐ [spring-ai-community/awesome-spring-ai](https://github.com/spring-ai-community/awesome-spring-ai)** — Spring AI 生态资料汇总，持续更新。含 MCP 集成、多模型路由、RAG 进阶、可观测性等各个方向的一手教程
+- **📦 ⭐ [langchain4j/langchain4j](https://github.com/langchain4j/langchain4j)** — LangChain4j 官方仓库，含示例模块 `langchain4j-examples`，覆盖 RAG、Agent、工具调用等全场景
+- **📦 [spring-ai-community/awesome-spring-ai](https://github.com/spring-ai-community/awesome-spring-ai)** — Spring AI 生态资料汇总，持续更新。含 MCP 集成、多模型路由、RAG 进阶、可观测性等各个方向的一手教程
 - **📦 [ai-boost/awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering)** — Harness Engineering 最全资料汇总。含工具、架构模式、Eval 框架、MCP 最新规范、可观测性方案
 - **📝 [Simon Willison's Blog](https://simonwillison.net)** — 资深开发者视角，专写「用 LLM 做工程」的实战经验。Prompt Injection 防御、安全边界、成本控制都有深度文章
 

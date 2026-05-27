@@ -61,3 +61,7 @@
 | 向量存储 | `langchain4j-pgvector` | BOM 托管 |
 | 智谱嵌入 | `langchain4j-community-zhipu-ai` | 1.0.0-beta5 |
 | MyBatis-Plus | `mybatis-plus-spring-boot4-starter` | 3.5.15 |
+
+### 补充：学习路线文档同步更新
+
+- `doc/learning-roadmap.md` 中 ~17 处 Spring AI 引用全部补充了 LangChain4j 对应方案，保持两个框架并列展示，本项目选用的 LangChain4j 标注"本项目选用"
