@@ -35,6 +35,29 @@ springdoc:
   api-docs:
     path: /v3/api-docs
 
+# ==================== LangChain4j 配置 ====================
+infopilot:
+  # DeepSeek 对话模型
+  deepseek:
+    api-key: ${DEEPSEEKJEECG}
+    base-url: https://api.deepseek.com/v1
+    model-name: deepseek-v4-flash
+    temperature: 0.3
+
+  # 智谱 Embedding 模型
+  embedding:
+    api-key: ${QRZHIPUKEY}
+    model-name: embedding-3
+
+  # PGVector 向量存储
+  vector-store:
+    host: localhost
+    port: 5432
+    database: infopilot
+    username: postgres
+    password: ${DB_PASSWORD:postgres}
+    table: embeddings
+
 # LangChain4j 日志（开发阶段开启）
 logging:
   level:

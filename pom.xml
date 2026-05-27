@@ -36,7 +36,7 @@
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
         <knife4j.version>4.5.0</knife4j.version>
         <langchain4j.version>1.15.0</langchain4j.version>
-        <langchain4j-pgvector.version>1.15.0-beta25</langchain4j-pgvector.version>
+        <langchain4j-beta.version>1.15.0-beta25</langchain4j-beta.version>
     </properties>
 
     <dependencyManagement>
@@ -64,7 +64,13 @@
             <dependency>
                 <groupId>dev.langchain4j</groupId>
                 <artifactId>langchain4j-pgvector</artifactId>
-                <version>${langchain4j-pgvector.version}</version>
+                <version>${langchain4j-beta.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-reactor</artifactId>
+                <version>${langchain4j-beta.version}</version>
             </dependency>
 
             <!-- 智谱 AI 嵌入模型（社区模块，版本独立管理） -->

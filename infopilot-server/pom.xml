@@ -29,6 +29,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- WebFlux（Flux<String> 流式 SSE 支持，与 WebMVC 共存） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
         <!-- LangChain4j 核心 -->
         <dependency>
             <groupId>dev.langchain4j</groupId>
@@ -41,6 +47,12 @@
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-open-ai</artifactId>
             <version>${langchain4j.version}</version>
+        </dependency>
+
+        <!-- LangChain4j Reactor（Flux<String> 流式支持） -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-reactor</artifactId>
         </dependency>
 
         <!-- LangChain4j PGVector 向量存储 -->
