@@ -65,7 +65,7 @@ public class ChatService {
     public String chat(String sessionId, String userMessage) {
         List<ChatMessage> messages = buildContext(sessionId, userMessage);
         ChatResponse response = chatModel.chat(messages);
-        saveHistory(sessionId, userMessage, response.aiMessage().text());
+        saveHistory(sessionId, wrapUserMessage(userMessage), response.aiMessage().text());
         return response.aiMessage().text();
     }
 
@@ -91,7 +91,7 @@ public class ChatService {
                 log.info("流式完成: sessionId={}, 回复长度={}, 内容预览={}",
                         sessionId, responseText.length(),
                         responseText.length() > 200 ? responseText.substring(0, 200) + "..." : responseText);
-                saveHistory(sessionId, userMessage, responseText);
+                saveHistory(sessionId, wrapUserMessage(userMessage), responseText);
                 sink.tryEmitComplete();
             }
 
@@ -114,8 +114,7 @@ public class ChatService {
         if (sessionId != null) {
             messages.addAll(loadHistory(sessionId));
         }
-        // XML 标签包裹用户输入——提示词注入防御
-        messages.add(UserMessage.from("<user_message>\n" + userMessage + "\n</user_message>"));
+        messages.add(UserMessage.from(wrapUserMessage(userMessage)));
         log.debug("上下文组装: sessionId={}, 历史{}条", sessionId, messages.size() - 2);
         return messages;
     }
@@ -159,6 +158,10 @@ public class ChatService {
         } catch (JsonProcessingException e) {
             log.error("序列化消息失败: sessionId={}", sessionId, e);
         }
+    }
+
+    private String wrapUserMessage(String message) {
+        return "<user_message>\n" + message + "\n</user_message>";
     }
 
     private String historyKey(String sessionId) {
