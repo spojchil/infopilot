@@ -102,6 +102,7 @@ public class LangChain4jConfig {
                 .user(vectorStoreUsername)
                 .password(vectorStorePassword)
                 .table(vectorStoreTable)
+                .dimension(1024)
                 .build();
     }
 }

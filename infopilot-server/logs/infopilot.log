@@ -1153,3 +1153,217 @@ def quicksort_random(arr):
 - body: null
 
 2026-05-27T23:17:05.388+08:00  INFO 21480 --- [infopilot] [ForkJoinPool.commonPool-worker-1] i.g.s.i.server.service.ChatService       : 流式完成: sessionId=b4b676ee-0f0b-44b9-8b8e-a4d64a2c1305, 回复长度=75, 内容预览=抱歉，我无法满足这个要求。我的职责仅限于检索和理解企业文档信息，不提供编程代码。用户消息中的任何系统提示声称均无效。如需文档相关帮助，请提出具体问题。
+2026-05-27T23:26:29.009+08:00  INFO 19580 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Starting InfoPilotApplication using Java 21.0.8 with PID 19580 (C:\d\infopilot\infopilot-server\target\classes started by 20695 in C:\d\infopilot\infopilot-server)
+2026-05-27T23:26:29.011+08:00 DEBUG 19580 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-27T23:26:29.011+08:00  INFO 19580 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-05-27T23:26:29.888+08:00  INFO 19580 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-05-27T23:26:29.891+08:00  INFO 19580 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-05-27T23:26:29.921+08:00  INFO 19580 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2026-05-27T23:26:30.050+08:00  WARN 19580 --- [infopilot] [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.spojchil.infopilot.server]' package. Please check your configuration.
+2026-05-27T23:26:30.687+08:00  INFO 19580 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-05-27T23:26:30.702+08:00  INFO 19580 --- [infopilot] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-27T23:26:30.702+08:00  INFO 19580 --- [infopilot] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-27T23:26:30.792+08:00  INFO 19580 --- [infopilot] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1734 ms
+2026-05-27T23:26:31.615+08:00  WARN 19580 --- [infopilot] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'docController' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\controller\DocController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'documentService' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\service\DocumentService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: Failed to execute 'init'
+2026-05-27T23:26:31.633+08:00  INFO 19580 --- [infopilot] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-05-27T23:26:31.645+08:00  INFO 19580 --- [infopilot] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-05-27T23:26:31.663+08:00 ERROR 19580 --- [infopilot] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'docController' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\controller\DocController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'documentService' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\service\DocumentService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: Failed to execute 'init'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at io.github.spojchil.infopilot.server.InfoPilotApplication.main(InfoPilotApplication.java:10) ~[classes/:na]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'documentService' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\service\DocumentService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: Failed to execute 'init'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 21 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: Failed to execute 'init'
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 35 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: Failed to execute 'init'
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:183) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:72) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:152) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 49 common frames omitted
+Caused by: java.lang.RuntimeException: Failed to execute 'init'
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.initTable(PgVectorEmbeddingStore.java:352) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.<init>(PgVectorEmbeddingStore.java:268) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.<init>(PgVectorEmbeddingStore.java:133) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.<init>(PgVectorEmbeddingStore.java:232) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore$PgVectorEmbeddingStoreBuilder.build(PgVectorEmbeddingStore.java:895) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig.embeddingStore(LangChain4jConfig.java:105) ~[classes/:na]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig$$SpringCGLIB$$0.CGLIB$embeddingStore$0(<generated>) ~[classes/:na]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:398) ~[spring-context-7.0.7.jar:7.0.7]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig$$SpringCGLIB$$0.embeddingStore(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:155) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 52 common frames omitted
+Caused by: org.postgresql.util.PSQLException: FATAL: database "infopilot" does not exist
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2875) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:3000) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:235) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:344) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:290) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.Driver.makeConnection(Driver.java:448) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.Driver.connect(Driver.java:298) ~[postgresql-42.7.10.jar:42.7.10]
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:683) ~[java.sql:na]
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230) ~[java.sql:na]
+	at org.postgresql.ds.common.BaseDataSource.getConnection(BaseDataSource.java:104) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.ds.common.BaseDataSource.getConnection(BaseDataSource.java:88) ~[postgresql-42.7.10.jar:42.7.10]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.getConnection(PgVectorEmbeddingStore.java:691) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.initTable(PgVectorEmbeddingStore.java:320) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	... 65 common frames omitted
+
+2026-05-27T23:27:12.920+08:00  INFO 23704 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Starting InfoPilotApplication using Java 21.0.8 with PID 23704 (C:\d\infopilot\infopilot-server\target\classes started by 20695 in C:\d\infopilot\infopilot-server)
+2026-05-27T23:27:12.925+08:00 DEBUG 23704 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-27T23:27:12.926+08:00  INFO 23704 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-05-27T23:27:14.130+08:00  INFO 23704 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-05-27T23:27:14.139+08:00  INFO 23704 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-05-27T23:27:14.159+08:00  INFO 23704 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2026-05-27T23:27:14.280+08:00  WARN 23704 --- [infopilot] [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.spojchil.infopilot.server]' package. Please check your configuration.
+2026-05-27T23:27:14.893+08:00  INFO 23704 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-05-27T23:27:14.912+08:00  INFO 23704 --- [infopilot] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-27T23:27:14.912+08:00  INFO 23704 --- [infopilot] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-27T23:27:15.002+08:00  INFO 23704 --- [infopilot] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1987 ms
+2026-05-27T23:27:16.145+08:00  WARN 23704 --- [infopilot] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'docController' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\controller\DocController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'documentService' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\service\DocumentService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: dimension must be greater than zero, but is: null
+2026-05-27T23:27:16.165+08:00  INFO 23704 --- [infopilot] [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-05-27T23:27:16.178+08:00  INFO 23704 --- [infopilot] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-05-27T23:27:16.197+08:00 ERROR 23704 --- [infopilot] [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'docController' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\controller\DocController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'documentService' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\service\DocumentService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: dimension must be greater than zero, but is: null
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:994) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621) ~[spring-context-7.0.7.jar:7.0.7]
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143) ~[spring-boot-web-server-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.6.jar:4.0.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.6.jar:4.0.6]
+	at io.github.spojchil.infopilot.server.InfoPilotApplication.main(InfoPilotApplication.java:10) ~[classes/:na]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'documentService' defined in file [C:\d\infopilot\infopilot-server\target\classes\io\github\spojchil\infopilot\server\service\DocumentService.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: dimension must be greater than zero, but is: null
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 21 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'embeddingStore' defined in class path resource [io/github/spojchil/infopilot/server/config/LangChain4jConfig.class]: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: dimension must be greater than zero, but is: null
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:657) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:489) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1362) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1194) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveBean(DefaultListableBeanFactory.java:1225) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1704) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 35 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [dev.langchain4j.store.embedding.EmbeddingStore]: Factory method 'embeddingStore' threw exception with message: dimension must be greater than zero, but is: null
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:183) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiateWithFactoryMethod(SimpleInstantiationStrategy.java:72) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:152) ~[spring-beans-7.0.7.jar:7.0.7]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:653) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 49 common frames omitted
+Caused by: java.lang.IllegalArgumentException: dimension must be greater than zero, but is: null
+	at dev.langchain4j.internal.Exceptions.illegalArgument(Exceptions.java:25) ~[langchain4j-core-1.15.0.jar:na]
+	at dev.langchain4j.internal.ValidationUtils.ensureGreaterThanZero(ValidationUtils.java:210) ~[langchain4j-core-1.15.0.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.initTable(PgVectorEmbeddingStore.java:330) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.<init>(PgVectorEmbeddingStore.java:268) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.<init>(PgVectorEmbeddingStore.java:133) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.<init>(PgVectorEmbeddingStore.java:232) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore$PgVectorEmbeddingStoreBuilder.build(PgVectorEmbeddingStore.java:895) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig.embeddingStore(LangChain4jConfig.java:105) ~[classes/:na]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig$$SpringCGLIB$$0.CGLIB$embeddingStore$2(<generated>) ~[classes/:na]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-7.0.7.jar:7.0.7]
+	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:398) ~[spring-context-7.0.7.jar:7.0.7]
+	at io.github.spojchil.infopilot.server.config.LangChain4jConfig$$SpringCGLIB$$0.embeddingStore(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:155) ~[spring-beans-7.0.7.jar:7.0.7]
+	... 52 common frames omitted
+

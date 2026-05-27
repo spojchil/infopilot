@@ -44,15 +44,8 @@ public class DocumentService {
 
         ingestor.ingest(document);
 
-        // 统计该文档的 chunk 数
-        int count = embeddingStore.search(
-                dev.langchain4j.store.embedding.EmbeddingSearchRequest.builder()
-                        .queryEmbedding(embeddingModel.embed(fileName).content())
-                        .maxResults(1000)
-                        .build()
-        ).matches().size();
-
-        log.info("摄入完成: {}, chunks: {}", fileName, count);
-        return count;
+        int estimatedChunks = document.text().length() / 500 + 1;
+        log.info("摄入完成: {}, 字符数={}, 估算片段数~{}", fileName, document.text().length(), estimatedChunks);
+        return estimatedChunks;
     }
 }
