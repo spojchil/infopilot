@@ -12,6 +12,7 @@ import dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 public class LangChain4jConfig {
@@ -63,6 +64,7 @@ public class LangChain4jConfig {
     private String embeddingModelName;
 
     @Bean
+    @Lazy
     public EmbeddingModel embeddingModel() {
         return ZhipuAiEmbeddingModel.builder()
                 .apiKey(embeddingApiKey)
@@ -91,6 +93,7 @@ public class LangChain4jConfig {
     private String vectorStoreTable;
 
     @Bean
+    @Lazy
     public EmbeddingStore<TextSegment> embeddingStore() {
         return PgVectorEmbeddingStore.builder()
                 .host(vectorStoreHost)
