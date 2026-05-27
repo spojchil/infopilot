@@ -36,9 +36,23 @@
 
 - JeecgBoot 3.9.2 — AI 模块使用 LangChain4j + pgvector，本地克隆后可对照学习
 
+## 分支策略（Git Flow）
+
+```
+main                     ← 稳定版本
+  └── develop            ← 开发主线
+        ├── feature/xxx  ← 功能分支
+        └── docs/xxx     ← 文档分支
+```
+
+- `main`：MVP 稳定版，只从 develop 合并
+- `develop`：日常开发，所有 feature 分支合入这里
+- `feature/*`：单个功能一个分支，完成后合入 develop
+
 ## 交互约定
 
 - 始终中文交流
 - 架构决策先讨论再写代码
 - 代码以理解原理优先，不过早引入生产级复杂度
 - 复杂任务结束后自动 commit
+- 新功能在 `develop` 分支开发，不要直接在 `main` 提交
