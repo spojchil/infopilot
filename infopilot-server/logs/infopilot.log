@@ -1367,3 +1367,285 @@ Caused by: java.lang.IllegalArgumentException: dimension must be greater than ze
 	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.lambda$instantiate$0(SimpleInstantiationStrategy.java:155) ~[spring-beans-7.0.7.jar:7.0.7]
 	... 52 common frames omitted
 
+2026-05-27T23:28:30.916+08:00  INFO 22948 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Starting InfoPilotApplication using Java 21.0.8 with PID 22948 (C:\d\infopilot\infopilot-server\target\classes started by 20695 in C:\d\infopilot\infopilot-server)
+2026-05-27T23:28:30.920+08:00 DEBUG 22948 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-27T23:28:30.920+08:00  INFO 22948 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-05-27T23:28:31.938+08:00  INFO 22948 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-05-27T23:28:31.942+08:00  INFO 22948 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-05-27T23:28:31.982+08:00  INFO 22948 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2026-05-27T23:28:32.133+08:00  WARN 22948 --- [infopilot] [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.spojchil.infopilot.server]' package. Please check your configuration.
+2026-05-27T23:28:32.855+08:00  INFO 22948 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-05-27T23:28:32.877+08:00  INFO 22948 --- [infopilot] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-27T23:28:32.879+08:00  INFO 22948 --- [infopilot] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-27T23:28:33.011+08:00  INFO 22948 --- [infopilot] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2040 ms
+2026-05-27T23:28:34.490+08:00  INFO 22948 --- [infopilot] [main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-05-27T23:28:34.804+08:00  INFO 22948 --- [infopilot] [main] m.e.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@5d2a4eed
+2026-05-27T23:28:35.023+08:00  INFO 22948 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-05-27T23:28:35.030+08:00  INFO 22948 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Started InfoPilotApplication in 4.749 seconds (process running for 5.475)
+2026-05-27T23:28:35.202+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-27T23:28:35.202+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-27T23:28:35.204+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-05-27T23:28:35.266+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.RetrievalService  : RAG 检索: query=test
+2026-05-27T23:28:36.480+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.RetrievalService  : 无匹配片段: query=test, minScore=0.6
+2026-05-27T23:29:15.443+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-2] i.g.s.i.server.service.DocumentService   : 开始摄入文档: test-doc.txt
+2026-05-27T23:29:16.422+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-2] i.g.s.i.server.service.DocumentService   : 解析完成: 627 字符
+2026-05-27T23:29:17.364+08:00 ERROR 22948 --- [infopilot] [http-nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.RuntimeException: java.sql.BatchUpdateException: Batch entry 0 INSERT INTO embeddings (embedding_id, embedding, text, metadata) VALUES (('031fe0c1-e279-42cd-95e9-1152a2048745'::uuid), ?, ('InfoPilot 企业文档智能助手 - 数据库配置指南
+
+## MySQL 连接配置
+
+MySQL 数据库连接地址为 jdbc:mysql://localhost:3306/infopilot，用户名 root，密码由环境变量 DB_PASSWORD 指定。
+生产环境请使用单独的只读账号，不要使用 root 账号。
+
+## Redis 缓存配置
+
+Redis 部署在 localhost:6379，用于缓存对话会话上下文。
+Key 前缀格式为 session:{id}:history，每条会话 TTL 为 1 小时。
+建议生产环境 Redis 使用 sentinel 模式确保高可用。
+
+## OpenAI 兼容 API 地址
+
+对话模型使用 DeepSeek API，base-url 配置为 https://api.deepseek.com/v1。
+模型名称为 deepseek-v4-flash，temperature 设置为 0.3。
+API Key 通过环境变量 DEEPSEEKJEECG 注入，不要在代码中硬编码。
+
+## 文件上传限制'), ('{
+  "index" : "0"
+}'))ON CONFLICT (embedding_id) DO UPDATE SET embedding = EXCLUDED.embedding,text = EXCLUDED.text,metadata = EXCLUDED.metadata was aborted: ERROR: expected 1024 dimensions, not 2048  Call getNextException to see other errors in the batch.] with root cause
+
+org.postgresql.util.PSQLException: ERROR: expected 1024 dimensions, not 2048
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2875) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2560) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:672) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.jdbc.PgStatement.internalExecuteBatch(PgStatement.java:892) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.jdbc.PgStatement.executeBatch(PgStatement.java:916) ~[postgresql-42.7.10.jar:42.7.10]
+	at org.postgresql.jdbc.PgPreparedStatement.executeBatch(PgPreparedStatement.java:1778) ~[postgresql-42.7.10.jar:42.7.10]
+	at dev.langchain4j.store.embedding.pgvector.PgVectorEmbeddingStore.addAll(PgVectorEmbeddingStore.java:675) ~[langchain4j-pgvector-1.15.0-beta25.jar:na]
+	at dev.langchain4j.store.embedding.EmbeddingStore.addAll(EmbeddingStore.java:67) ~[langchain4j-core-1.15.0.jar:na]
+	at dev.langchain4j.store.embedding.EmbeddingStoreIngestor.ingest(EmbeddingStoreIngestor.java:202) ~[langchain4j-core-1.15.0.jar:na]
+	at dev.langchain4j.store.embedding.EmbeddingStoreIngestor.ingest(EmbeddingStoreIngestor.java:156) ~[langchain4j-core-1.15.0.jar:na]
+	at io.github.spojchil.infopilot.server.service.DocumentService.ingest(DocumentService.java:45) ~[classes/:na]
+	at io.github.spojchil.infopilot.server.controller.DocController.upload(DocController.java:30) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.7.jar:7.0.7]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.21.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.7.jar:7.0.7]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1801) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.21.jar:11.0.21]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-05-27T23:29:17.469+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-3] i.g.s.i.server.service.RetrievalService  : RAG 检索: query=??????????
+2026-05-27T23:29:17.754+08:00  INFO 22948 --- [infopilot] [http-nio-8080-exec-3] i.g.s.i.server.service.RetrievalService  : 无匹配片段: query=??????????, minScore=0.6
+2026-05-27T23:30:37.945+08:00  INFO 23612 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Starting InfoPilotApplication using Java 21.0.8 with PID 23612 (C:\d\infopilot\infopilot-server\target\classes started by 20695 in C:\d\infopilot\infopilot-server)
+2026-05-27T23:30:37.947+08:00 DEBUG 23612 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-27T23:30:37.947+08:00  INFO 23612 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-05-27T23:30:39.201+08:00  INFO 23612 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-05-27T23:30:39.206+08:00  INFO 23612 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-05-27T23:30:39.254+08:00  INFO 23612 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2026-05-27T23:30:39.398+08:00  WARN 23612 --- [infopilot] [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.spojchil.infopilot.server]' package. Please check your configuration.
+2026-05-27T23:30:41.082+08:00  INFO 23612 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-05-27T23:30:41.119+08:00  INFO 23612 --- [infopilot] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-27T23:30:41.119+08:00  INFO 23612 --- [infopilot] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-27T23:30:41.302+08:00  INFO 23612 --- [infopilot] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3299 ms
+2026-05-27T23:30:43.172+08:00  INFO 23612 --- [infopilot] [main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-05-27T23:30:43.603+08:00  INFO 23612 --- [infopilot] [main] m.e.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@5d2a4eed
+2026-05-27T23:30:44.041+08:00  INFO 23612 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-05-27T23:30:44.056+08:00  INFO 23612 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Started InfoPilotApplication in 6.87 seconds (process running for 7.861)
+2026-05-27T23:30:51.927+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-27T23:30:51.927+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-27T23:30:51.929+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-05-27T23:30:51.992+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.DocumentService   : 开始摄入文档: test-doc.txt
+2026-05-27T23:30:52.738+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.DocumentService   : 解析完成: 627 字符
+2026-05-27T23:30:54.087+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.DocumentService   : 摄入完成: test-doc.txt, 字符数=627, 估算片段数~2
+2026-05-27T23:30:54.159+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-2] i.g.s.i.server.service.RetrievalService  : RAG 检索: query=???????
+2026-05-27T23:30:54.464+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-2] i.g.s.i.server.service.RetrievalService  : 检索到 2 个片段
+2026-05-27T23:30:54.464+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-2] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.6692048714649479, text=null...
+2026-05-27T23:30:54.464+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-2] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.6448667457461624, text=null...
+2026-05-27T23:30:54.508+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-2] d.l.http.client.log.LoggingHttpClient    : HTTP request:
+- method: POST
+- url: https://api.deepseek.com/v1/chat/completions
+- headers: [Authorization: Beare...f6], [User-Agent: langchain4j-openai], [Content-Type: application/json]
+- body: {
+  "model" : "deepseek-v4-flash",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "你是 InfoPilot，一个企业文档智能助手。\n基于以下参考文档片段回答用户问题。\n\n规则：\n- 如果文档中有相关信息，请引用具体内容并标注来源\n- 如果文档中没有相关信息，直接说\"未在文档中找到相关信息\"\n- 不要编造文档中没有的内容\n- 回答应简洁、准确\n\n\n## 参考文档\n\n[来源: 未知文档, 相似度: 0.67]\nInfoPilot 企业文档智能助手 - 数据库配置指南\n\n## MySQL 连接配置\n\nMySQL 数据库连接地址为 jdbc:mysql://localhost:3306/infopilot，用户名 root，密码由环境变量 DB_PASSWORD 指定。\n生产环境请使用单独的只读账号，不要使用 root 账号。\n\n## Redis 缓存配置\n\nRedis 部署在 localhost:6379，用于缓存对话会话上下文。\nKey 前缀格式为 session:{id}:history，每条会话 TTL 为 1 小时。\n建议生产环境 Redis 使用 sentinel 模式确保高可用。\n\n## OpenAI 兼容 API 地址\n\n对话模型使用 DeepSeek API，base-url 配置为 https://api.deepseek.com/v1。\n模型名称为 deepseek-v4-flash，temperature 设置为 0.3。\nAPI Key 通过环境变量 DEEPSEEKJEECG 注入，不要在代码中硬编码。\n\n## 文件上传限制\n\n---\n\n[来源: 未知文档, 相似度: 0.64]\n系统支持上传 PDF、Word、Markdown 和纯文本文件，单文件最大 50MB。\n文件通过 Apache Tika 解析后，按 500 字符递归切分，重叠 50 字符。\n向量化使用智谱 embedding-3 模型（1024 维），存储于 PostgreSQL + pgvector。\n\n---\n\n\n\n## 用户问题\n???????"
+  }, {
+    "role" : "user",
+    "content" : "???????"
+  } ],
+  "temperature" : 0.3,
+  "stream" : false
+}
+
+2026-05-27T23:30:59.633+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-2] d.l.http.client.log.LoggingHttpClient    : HTTP response:
+- status code: 200
+- headers: [:status: 200], [access-control-allow-credentials: true], [age: 0], [content-type: application/json], [date: Wed, 27 May 2026 15:30:55 GMT], [eo-cache-status: MISS], [eo-log-uuid: 13297559658302132164], [server: openresty], [strict-transport-security: max-age=31536000; includeSubDomains; preload], [vary: origin, access-control-request-method, access-control-request-headers], [x-content-type-options: nosniff], [x-ds-trace-id: 4600e0199806d319581c3b12962e7b60]
+- body: {"id":"ab100f00-826d-49c6-a737-1a2d523655af","object":"chat.completion","created":1779895855,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"未在文档中找到相关信息。您的问题似乎是无效输入或乱码，请重新描述您的问题。我可以帮您查找关于数据库配置、缓存、模型API、文件上传等企业文档智能助手的功能信息。","reasoning_content":"我们被问到\"用户问题\"是\"???????”，这看起来像是乱码或无效输入。但根据规则，我们必须回答用户问题。由于问题无法理解，最好直接回应\"未在文档中找到相关信息\"或要求澄清。但鉴于问题不明确，应当根据文档内容提供通用帮助。\n\n然而，用户问题中的\"???????\"可能表示用户输入了错误或乱码。作为InfoPilot，我可以尝试给出合理回应。但规则要求基于文档，如果问题不明确，不能编造。\n\n更合适的做法是：指出问题无法理解，并建议用户提供更清晰的问题。但既然指令要求回答用户问题，我可以尝试解释。\n\n但为了严格遵循指令，由于文档中没有与\"???????\"相关的内容，我应该回答\"未在文档中找到相关信息\"。\n\n但这样可能不礼貌。我可以先说明\"您的问题似乎无法识别，请重新描述您的问题。\"但这不是基于文档。\n\n综合考虑，最好的响应是：\"未在文档中找到相关信息。您的问题似乎是乱码，请提供清晰的问题。\""},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":394,"completion_tokens":260,"total_tokens":654,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":215},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":394},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}
+
+2026-05-27T23:31:11.933+08:00  WARN 23612 --- [infopilot] [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2026-05-27T23:31:22.592+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-5] i.g.s.i.server.service.RetrievalService  : RAG 检索: query=??????????
+2026-05-27T23:31:23.025+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-5] i.g.s.i.server.service.RetrievalService  : 检索到 2 个片段
+2026-05-27T23:31:23.026+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-5] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.6688447792026535, text=null...
+2026-05-27T23:31:23.026+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-5] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.6488987327934832, text=null...
+2026-05-27T23:31:23.028+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-5] d.l.http.client.log.LoggingHttpClient    : HTTP request:
+- method: POST
+- url: https://api.deepseek.com/v1/chat/completions
+- headers: [Authorization: Beare...f6], [User-Agent: langchain4j-openai], [Content-Type: application/json]
+- body: {
+  "model" : "deepseek-v4-flash",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "你是 InfoPilot，一个企业文档智能助手。\n基于以下参考文档片段回答用户问题。\n\n规则：\n- 如果文档中有相关信息，请引用具体内容并标注来源\n- 如果文档中没有相关信息，直接说\"未在文档中找到相关信息\"\n- 不要编造文档中没有的内容\n- 回答应简洁、准确\n\n\n## 参考文档\n\n[来源: 未知文档, 相似度: 0.67]\nInfoPilot 企业文档智能助手 - 数据库配置指南\n\n## MySQL 连接配置\n\nMySQL 数据库连接地址为 jdbc:mysql://localhost:3306/infopilot，用户名 root，密码由环境变量 DB_PASSWORD 指定。\n生产环境请使用单独的只读账号，不要使用 root 账号。\n\n## Redis 缓存配置\n\nRedis 部署在 localhost:6379，用于缓存对话会话上下文。\nKey 前缀格式为 session:{id}:history，每条会话 TTL 为 1 小时。\n建议生产环境 Redis 使用 sentinel 模式确保高可用。\n\n## OpenAI 兼容 API 地址\n\n对话模型使用 DeepSeek API，base-url 配置为 https://api.deepseek.com/v1。\n模型名称为 deepseek-v4-flash，temperature 设置为 0.3。\nAPI Key 通过环境变量 DEEPSEEKJEECG 注入，不要在代码中硬编码。\n\n## 文件上传限制\n\n---\n\n[来源: 未知文档, 相似度: 0.65]\n系统支持上传 PDF、Word、Markdown 和纯文本文件，单文件最大 50MB。\n文件通过 Apache Tika 解析后，按 500 字符递归切分，重叠 50 字符。\n向量化使用智谱 embedding-3 模型（1024 维），存储于 PostgreSQL + pgvector。\n\n---\n\n\n\n## 用户问题\n??????????"
+  }, {
+    "role" : "user",
+    "content" : "??????????"
+  } ],
+  "temperature" : 0.3,
+  "stream" : false
+}
+
+2026-05-27T23:31:24.815+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-5] d.l.http.client.log.LoggingHttpClient    : HTTP response:
+- status code: 200
+- headers: [:status: 200], [access-control-allow-credentials: true], [age: 0], [content-type: application/json], [date: Wed, 27 May 2026 15:31:23 GMT], [eo-cache-status: MISS], [eo-log-uuid: 17891067737050148999], [server: openresty], [strict-transport-security: max-age=31536000; includeSubDomains; preload], [vary: origin, access-control-request-method, access-control-request-headers], [x-content-type-options: nosniff], [x-ds-trace-id: 932347bb8ff8a37b304bc92a7bb49302]
+- body: {"id":"e603892d-c3ab-40ef-94dc-fba7c5e1dda1","object":"chat.completion","created":1779895883,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"未在文档中找到相关信息。","reasoning_content":"我们被用户问了“??????????”，这看起来像是乱码或无法理解的问题。可能是用户输入时出现了编码问题。根据规则，如果无法理解问题或文档中没有相关信息，应直接说\"未在文档中找到相关信息\"。用户可以给出无意义的问题，我应该礼貌地告知未找到相关信息。"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":394,"completion_tokens":69,"total_tokens":463,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":62},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":394},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}
+
+2026-05-27T23:32:00.617+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-7] i.g.s.i.server.service.RetrievalService  : RAG 检索: query=数据库连接地址是什么
+2026-05-27T23:32:01.154+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-7] i.g.s.i.server.service.RetrievalService  : 检索到 2 个片段
+2026-05-27T23:32:01.154+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-7] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.7183402942647091, text=null...
+2026-05-27T23:32:01.154+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-7] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.6381816464120322, text=null...
+2026-05-27T23:32:01.159+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-7] d.l.http.client.log.LoggingHttpClient    : HTTP request:
+- method: POST
+- url: https://api.deepseek.com/v1/chat/completions
+- headers: [Authorization: Beare...f6], [User-Agent: langchain4j-openai], [Content-Type: application/json]
+- body: {
+  "model" : "deepseek-v4-flash",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "你是 InfoPilot，一个企业文档智能助手。\n基于以下参考文档片段回答用户问题。\n\n规则：\n- 如果文档中有相关信息，请引用具体内容并标注来源\n- 如果文档中没有相关信息，直接说\"未在文档中找到相关信息\"\n- 不要编造文档中没有的内容\n- 回答应简洁、准确\n\n\n## 参考文档\n\n[来源: 未知文档, 相似度: 0.72]\nInfoPilot 企业文档智能助手 - 数据库配置指南\n\n## MySQL 连接配置\n\nMySQL 数据库连接地址为 jdbc:mysql://localhost:3306/infopilot，用户名 root，密码由环境变量 DB_PASSWORD 指定。\n生产环境请使用单独的只读账号，不要使用 root 账号。\n\n## Redis 缓存配置\n\nRedis 部署在 localhost:6379，用于缓存对话会话上下文。\nKey 前缀格式为 session:{id}:history，每条会话 TTL 为 1 小时。\n建议生产环境 Redis 使用 sentinel 模式确保高可用。\n\n## OpenAI 兼容 API 地址\n\n对话模型使用 DeepSeek API，base-url 配置为 https://api.deepseek.com/v1。\n模型名称为 deepseek-v4-flash，temperature 设置为 0.3。\nAPI Key 通过环境变量 DEEPSEEKJEECG 注入，不要在代码中硬编码。\n\n## 文件上传限制\n\n---\n\n[来源: 未知文档, 相似度: 0.64]\n系统支持上传 PDF、Word、Markdown 和纯文本文件，单文件最大 50MB。\n文件通过 Apache Tika 解析后，按 500 字符递归切分，重叠 50 字符。\n向量化使用智谱 embedding-3 模型（1024 维），存储于 PostgreSQL + pgvector。\n\n---\n\n\n\n## 用户问题\n数据库连接地址是什么"
+  }, {
+    "role" : "user",
+    "content" : "数据库连接地址是什么"
+  } ],
+  "temperature" : 0.3,
+  "stream" : false
+}
+
+2026-05-27T23:32:03.030+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-7] d.l.http.client.log.LoggingHttpClient    : HTTP response:
+- status code: 200
+- headers: [:status: 200], [access-control-allow-credentials: true], [age: 0], [content-type: application/json], [date: Wed, 27 May 2026 15:32:02 GMT], [eo-cache-status: MISS], [eo-log-uuid: 14062113347714836605], [server: openresty], [strict-transport-security: max-age=31536000; includeSubDomains; preload], [vary: origin, access-control-request-method, access-control-request-headers], [x-content-type-options: nosniff], [x-ds-trace-id: 61435bba03c6916d2c2f43c652472c32]
+- body: {"id":"b2d958b2-7d5e-42ce-8eef-5fe948373105","object":"chat.completion","created":1779895922,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"数据库连接地址为 `jdbc:mysql://localhost:3306/infopilot`。","reasoning_content":"我们根据参考文档，找到MySQL连接配置部分：MySQL数据库连接地址为jdbc:mysql://localhost:3306/infopilot。所以答案是：jdbc:mysql://localhost:3306/infopilot。"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":398,"completion_tokens":68,"total_tokens":466,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":47},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":398},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}
+
+2026-05-27T23:32:14.314+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-8] i.g.s.i.server.service.RetrievalService  : RAG 检索: query=数据库连接地址是什么
+2026-05-27T23:32:14.628+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-8] i.g.s.i.server.service.RetrievalService  : 检索到 2 个片段
+2026-05-27T23:32:14.628+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-8] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.7183402942647091, text=null...
+2026-05-27T23:32:14.628+08:00 DEBUG 23612 --- [infopilot] [http-nio-8080-exec-8] i.g.s.i.server.service.RetrievalService  :   score={:.3f}, source=0.6381816464120322, text=null...
+2026-05-27T23:32:14.628+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-8] d.l.http.client.log.LoggingHttpClient    : HTTP request:
+- method: POST
+- url: https://api.deepseek.com/v1/chat/completions
+- headers: [Authorization: Beare...f6], [User-Agent: langchain4j-openai], [Content-Type: application/json]
+- body: {
+  "model" : "deepseek-v4-flash",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "你是 InfoPilot，一个企业文档智能助手。\n基于以下参考文档片段回答用户问题。\n\n规则：\n- 如果文档中有相关信息，请引用具体内容并标注来源\n- 如果文档中没有相关信息，直接说\"未在文档中找到相关信息\"\n- 不要编造文档中没有的内容\n- 回答应简洁、准确\n\n\n## 参考文档\n\n[来源: 未知文档, 相似度: 0.72]\nInfoPilot 企业文档智能助手 - 数据库配置指南\n\n## MySQL 连接配置\n\nMySQL 数据库连接地址为 jdbc:mysql://localhost:3306/infopilot，用户名 root，密码由环境变量 DB_PASSWORD 指定。\n生产环境请使用单独的只读账号，不要使用 root 账号。\n\n## Redis 缓存配置\n\nRedis 部署在 localhost:6379，用于缓存对话会话上下文。\nKey 前缀格式为 session:{id}:history，每条会话 TTL 为 1 小时。\n建议生产环境 Redis 使用 sentinel 模式确保高可用。\n\n## OpenAI 兼容 API 地址\n\n对话模型使用 DeepSeek API，base-url 配置为 https://api.deepseek.com/v1。\n模型名称为 deepseek-v4-flash，temperature 设置为 0.3。\nAPI Key 通过环境变量 DEEPSEEKJEECG 注入，不要在代码中硬编码。\n\n## 文件上传限制\n\n---\n\n[来源: 未知文档, 相似度: 0.64]\n系统支持上传 PDF、Word、Markdown 和纯文本文件，单文件最大 50MB。\n文件通过 Apache Tika 解析后，按 500 字符递归切分，重叠 50 字符。\n向量化使用智谱 embedding-3 模型（1024 维），存储于 PostgreSQL + pgvector。\n\n---\n\n\n\n## 用户问题\n数据库连接地址是什么"
+  }, {
+    "role" : "user",
+    "content" : "数据库连接地址是什么"
+  } ],
+  "temperature" : 0.3,
+  "stream" : false
+}
+
+2026-05-27T23:32:15.952+08:00  INFO 23612 --- [infopilot] [http-nio-8080-exec-8] d.l.http.client.log.LoggingHttpClient    : HTTP response:
+- status code: 200
+- headers: [:status: 200], [access-control-allow-credentials: true], [age: 0], [content-type: application/json], [date: Wed, 27 May 2026 15:32:15 GMT], [eo-cache-status: MISS], [eo-log-uuid: 504424616893526318], [server: openresty], [strict-transport-security: max-age=31536000; includeSubDomains; preload], [vary: origin, access-control-request-method, access-control-request-headers], [x-content-type-options: nosniff], [x-ds-trace-id: db88ba2e298dbe5dbf4e6e050a1665d0]
+- body: {"id":"6924462d-de32-4296-9c00-72a464133479","object":"chat.completion","created":1779895935,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"数据库连接地址为 `jdbc:mysql://localhost:3306/infopilot`（来源：InfoPilot 数据库配置指南）。","reasoning_content":"我们根据文档回答。文档中明确指出：MySQL 数据库连接地址为 jdbc:mysql://localhost:3306/infopilot。"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":398,"completion_tokens":60,"total_tokens":458,"prompt_tokens_details":{"cached_tokens":384},"completion_tokens_details":{"reasoning_tokens":29},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":14},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}
+
+2026-05-27T23:33:50.136+08:00  INFO 22568 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Starting InfoPilotApplication using Java 21.0.8 with PID 22568 (C:\d\infopilot\infopilot-server\target\classes started by 20695 in C:\d\infopilot\infopilot-server)
+2026-05-27T23:33:50.138+08:00 DEBUG 22568 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Running with Spring Boot v4.0.6, Spring v7.0.7
+2026-05-27T23:33:50.140+08:00  INFO 22568 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-05-27T23:33:50.994+08:00  INFO 22568 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-05-27T23:33:50.994+08:00  INFO 22568 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-05-27T23:33:51.024+08:00  INFO 22568 --- [infopilot] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2026-05-27T23:33:51.129+08:00  WARN 22568 --- [infopilot] [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.spojchil.infopilot.server]' package. Please check your configuration.
+2026-05-27T23:33:51.674+08:00  INFO 22568 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-05-27T23:33:51.694+08:00  INFO 22568 --- [infopilot] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-27T23:33:51.694+08:00  INFO 22568 --- [infopilot] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.21]
+2026-05-27T23:33:51.778+08:00  INFO 22568 --- [infopilot] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1590 ms
+2026-05-27T23:33:52.980+08:00  INFO 22568 --- [infopilot] [main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2026-05-27T23:33:53.304+08:00  INFO 22568 --- [infopilot] [main] m.e.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@5d2a4eed
+2026-05-27T23:33:53.660+08:00  INFO 22568 --- [infopilot] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-05-27T23:33:53.669+08:00  INFO 22568 --- [infopilot] [main] i.g.s.i.server.InfoPilotApplication      : Started InfoPilotApplication in 4.105 seconds (process running for 4.692)
+2026-05-27T23:33:53.736+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-27T23:33:53.736+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-27T23:33:53.742+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2026-05-27T23:33:53.806+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.DocumentService   : 开始摄入文档: test-doc.txt
+2026-05-27T23:33:54.742+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.DocumentService   : 解析完成: 627 字符
+2026-05-27T23:33:56.188+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-1] i.g.s.i.server.service.DocumentService   : 摄入完成: test-doc.txt, 字符数=627, 估算片段数~2
+2026-05-27T23:34:09.185+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-9] i.g.s.i.server.service.RetrievalService  : RAG 检索: query=数据库连接地址是什么
+2026-05-27T23:34:09.606+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-9] i.g.s.i.server.service.RetrievalService  : 检索到 2 个片段
+2026-05-27T23:34:09.606+08:00 DEBUG 22568 --- [infopilot] [http-nio-8080-exec-9] i.g.s.i.server.service.RetrievalService  :   score=0.7183402942647091, source=test-doc.txt, text=InfoPilot 企业文档智能助手 - 数据库配置指南
+
+## MySQL 连接配置
+
+MySQL 数据库连接地址为 jdbc:mysql://localho...
+2026-05-27T23:34:09.608+08:00 DEBUG 22568 --- [infopilot] [http-nio-8080-exec-9] i.g.s.i.server.service.RetrievalService  :   score=0.6381816464120322, source=test-doc.txt, text=系统支持上传 PDF、Word、Markdown 和纯文本文件，单文件最大 50MB。
+文件通过 Apache Tika 解析后，按 500 字符递归切分，重叠...
+2026-05-27T23:34:09.676+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-9] d.l.http.client.log.LoggingHttpClient    : HTTP request:
+- method: POST
+- url: https://api.deepseek.com/v1/chat/completions
+- headers: [Authorization: Beare...f6], [User-Agent: langchain4j-openai], [Content-Type: application/json]
+- body: {
+  "model" : "deepseek-v4-flash",
+  "messages" : [ {
+    "role" : "system",
+    "content" : "你是 InfoPilot，一个企业文档智能助手。\n基于以下参考文档片段回答用户问题。\n\n规则：\n- 如果文档中有相关信息，请引用具体内容并标注来源\n- 如果文档中没有相关信息，直接说\"未在文档中找到相关信息\"\n- 不要编造文档中没有的内容\n- 回答应简洁、准确\n\n\n## 参考文档\n\n[来源: test-doc.txt, 相似度: 0.72]\nInfoPilot 企业文档智能助手 - 数据库配置指南\n\n## MySQL 连接配置\n\nMySQL 数据库连接地址为 jdbc:mysql://localhost:3306/infopilot，用户名 root，密码由环境变量 DB_PASSWORD 指定。\n生产环境请使用单独的只读账号，不要使用 root 账号。\n\n## Redis 缓存配置\n\nRedis 部署在 localhost:6379，用于缓存对话会话上下文。\nKey 前缀格式为 session:{id}:history，每条会话 TTL 为 1 小时。\n建议生产环境 Redis 使用 sentinel 模式确保高可用。\n\n## OpenAI 兼容 API 地址\n\n对话模型使用 DeepSeek API，base-url 配置为 https://api.deepseek.com/v1。\n模型名称为 deepseek-v4-flash，temperature 设置为 0.3。\nAPI Key 通过环境变量 DEEPSEEKJEECG 注入，不要在代码中硬编码。\n\n## 文件上传限制\n\n---\n\n[来源: test-doc.txt, 相似度: 0.64]\n系统支持上传 PDF、Word、Markdown 和纯文本文件，单文件最大 50MB。\n文件通过 Apache Tika 解析后，按 500 字符递归切分，重叠 50 字符。\n向量化使用智谱 embedding-3 模型（1024 维），存储于 PostgreSQL + pgvector。\n\n---\n\n\n\n## 用户问题\n数据库连接地址是什么"
+  }, {
+    "role" : "user",
+    "content" : "数据库连接地址是什么"
+  } ],
+  "temperature" : 0.3,
+  "stream" : false
+}
+
+2026-05-27T23:34:11.092+08:00  INFO 22568 --- [infopilot] [http-nio-8080-exec-9] d.l.http.client.log.LoggingHttpClient    : HTTP response:
+- status code: 200
+- headers: [:status: 200], [access-control-allow-credentials: true], [age: 0], [content-type: application/json], [date: Wed, 27 May 2026 15:34:10 GMT], [eo-cache-status: MISS], [eo-log-uuid: 2895055944591280084], [server: openresty], [strict-transport-security: max-age=31536000; includeSubDomains; preload], [vary: origin, access-control-request-method, access-control-request-headers], [x-content-type-options: nosniff], [x-ds-trace-id: 213594619348db5df2bbf82dd65f0b13]
+- body: {"id":"04e77c23-78cf-4904-a878-499ce9a22786","object":"chat.completion","created":1779896050,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"根据文档，数据库连接地址为：`jdbc:mysql://localhost:3306/infopilot`（来源：test-doc.txt，相似度0.72）。","reasoning_content":"我们根据参考文档内容回答。文档中提到MySQL连接地址为jdbc:mysql://localhost:3306/infopilot。"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":400,"completion_tokens":65,"total_tokens":465,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":27},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":400},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}
+

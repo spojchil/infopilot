@@ -71,10 +71,9 @@ public class RetrievalService {
 
         log.info("检索到 {} 个片段", matches.size());
         for (var m : matches) {
-            log.debug("  score={:.3f}, source={}, text={}...",
-                    m.score(),
-                    m.embedded().metadata().getString("fileName"),
-                    m.embedded().text().substring(0, Math.min(80, m.embedded().text().length())));
+            String fileName = m.embedded().metadata().getString("fileName");
+            String preview = m.embedded().text().substring(0, Math.min(80, m.embedded().text().length()));
+            log.debug("  score={}, source={}, text={}...", m.score(), fileName, preview);
         }
 
         String context = buildContext(matches);
