@@ -63,7 +63,8 @@ async function send() {
     const assistantDiv = addMsg('assistant', '', 'streaming');
 
     try {
-        const resp = await fetch(`/api/chat/stream?sessionId=${encodeURIComponent(sessionId)}&message=${encodeURIComponent(msg)}`);
+        const apiBase = location.hostname === 'localhost' ? 'http://localhost:8080' : '';
+        const resp = await fetch(`${apiBase}/api/chat/stream?sessionId=${encodeURIComponent(sessionId)}&message=${encodeURIComponent(msg)}`);
         const reader = resp.body.getReader();
         const decoder = new TextDecoder();
         let buffer = '';
