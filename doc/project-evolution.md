@@ -65,3 +65,26 @@
 ### 补充：学习路线文档同步更新
 
 - `doc/learning-roadmap.md` 中 ~17 处 Spring AI 引用全部补充了 LangChain4j 对应方案，保持两个框架并列展示，本项目选用的 LangChain4j 标注"本项目选用"
+
+---
+
+## 2026-05-27 · 上下文工程方案设计
+
+### 决定：上下文管理走 Service 层手动管理 + Redis 持久化，不用 LangChain4j 内置 ChatMemory
+
+- **理由**：
+  1. **面试可讲性**：手动实现能讲清"滑动窗口 + Token 预算 + 摘要压缩"的每一步原理。`MessageWindowChatMemory.withMaxMessages(10)` 一行搞定但面试官追问"超窗口后怎么处理"时答不上来
+  2. **定制灵活度**：内置 ChatMemory 没有 Token 预算感知能力——它只管消息条数，不管每条消息多少 token。我们需要 70% 水位预警 + 异步压缩，这些必须手写
+  3. **旁路摘要不阻塞主链路**：所有大厂方案（Google ADK、Claude Code）都把压缩放在异步旁路，LangChain4j 的同步 ChatMemory 不支持这种模式
+
+### 决定：V1 先做纯滑动窗口 + Token 计数，V2 再加摘要压缩
+
+- **理由**：摘要压缩需要额外一次 LLM 调用（多 200-300ms 延迟 + 成本）。先跑通基础链路，观察实际 token 占用数据后再决定是否需要摘要——如果 10 轮对话根本达不到 70% 水位，摘要就是过度设计
+- **来源**：Claude Code 的"60% 主动压缩"是编程 Agent 场景（单次任务 10 万+ token），企业文档问答场景是否同样适用需要先验证
+
+### 发现：所有主流 Agent（Claude Code、Cursor、Google ADK）都在做分层记忆，InfoPilot 设计与之对齐
+
+- 工作记忆 ≈ Redis List 滑动窗口
+- 情节记忆 ≈ Redis 摘要缓存 + 完整历史
+- 语义记忆 ≈ PGVector 用户偏好（阶段 6）
+- 详细调研记录在 `doc/context-engineering.md`
