@@ -26,21 +26,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- LangChain4j -->
+        <!-- LangChain4j BOM 版本（BOM 内部自动区分 stable/beta） -->
         <langchain4j.version>1.15.0</langchain4j.version>
 
         <!-- MyBatis-Plus -->
         <mybatis-plus.version>3.5.15</mybatis-plus.version>
-
-        <!-- 数据库 -->
-        <postgresql.version>42.7.11</postgresql.version>
-
-        <!-- 工具库 -->
-        <lombok.version>1.18.46</lombok.version>
-        <commons-lang3.version>3.20.0</commons-lang3.version>
-
-        <!-- 测试 -->
-        <testcontainers.version>2.0.5</testcontainers.version>
 
         <!-- 插件 -->
         <spotless.version>3.5.1</spotless.version>
@@ -48,7 +38,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- LangChain4j BOM -->
+            <!-- LangChain4j BOM：统一管理 langchain4j、langchain4j-open-ai、langchain4j-pgvector 等版本 -->
             <dependency>
                 <groupId>dev.langchain4j</groupId>
                 <artifactId>langchain4j-bom</artifactId>
@@ -57,25 +47,11 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- LangChain4j 核心 -->
+            <!-- 智谱 AI 社区适配（不在 BOM 管理范围，需手动指定） -->
             <dependency>
                 <groupId>dev.langchain4j</groupId>
-                <artifactId>langchain4j</artifactId>
-                <version>${langchain4j.version}</version>
-            </dependency>
-
-            <!-- LangChain4j OpenAI 兼容 -->
-            <dependency>
-                <groupId>dev.langchain4j</groupId>
-                <artifactId>langchain4j-open-ai</artifactId>
-                <version>${langchain4j.version}</version>
-            </dependency>
-
-            <!-- PostgreSQL 驱动 -->
-            <dependency>
-                <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>${postgresql.version}</version>
+                <artifactId>langchain4j-community-zhipu-ai</artifactId>
+                <version>${langchain4j.version}-beta25</version>
             </dependency>
 
             <!-- MyBatis-Plus -->
@@ -90,40 +66,6 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
 
-            <!-- Lombok -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- Commons Lang3 -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
-
-            <!-- Testcontainers -->
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers</artifactId>
-                <version>${testcontainers.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-postgresql</artifactId>
-                <version>${testcontainers.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-junit-jupiter</artifactId>
-                <version>${testcontainers.version}</version>
-                <scope>test</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -153,7 +95,6 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
