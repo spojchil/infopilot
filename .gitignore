@@ -1,0 +1,40 @@
+# === 敏感信息 ===
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+application-local.yml
+
+# === IDE ===
+.idea/
+*.iml
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# === 构建产物 ===
+target/
+*.class
+*.jar
+*.war
+node_modules/
+dist/
+build/
+
+# === 日志 ===
+logs/
+*.log
+
+# === 系统文件 ===
+.DS_Store
+Thumbs.db
+
+# === 本地 AI 配置（不提交） ===
+.claude/*
+!.claude/settings.json
+!.claude/skills/
+.claude/settings.local.json
+.claude/plans/
+.claude/worktrees/
+*.local.md
