@@ -33,6 +33,8 @@ infopilot:
     base-url: ${CHAT_BASE_URL}
     api-key: ${CHAT_API_KEY}
     model-name: ${CHAT_MODEL}
+    log-requests: ${CHAT_LOG_REQUESTS:false}
+    log-responses: ${CHAT_LOG_RESPONSES:false}
 
   embedding:
     base-url: ${EMBEDDING_BASE_URL}
