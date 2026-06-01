@@ -19,6 +19,8 @@ public class LangChain4jProperties {
         private double temperature = 0.3;
         private int maxTokens = 16384;
         private int timeoutSeconds = 600;
+        private boolean logRequests = false;
+        private boolean logResponses = false;
     }
 
     @Data

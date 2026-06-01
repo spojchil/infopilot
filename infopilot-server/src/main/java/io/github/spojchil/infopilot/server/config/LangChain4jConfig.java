@@ -42,8 +42,8 @@ public class LangChain4jConfig {
                 .temperature(chat.getTemperature())
                 .maxTokens(chat.getMaxTokens())
                 .timeout(Duration.ofSeconds(chat.getTimeoutSeconds()))
-                .logRequests(true)
-                .logResponses(true)
+                .logRequests(chat.isLogRequests())
+                .logResponses(chat.isLogResponses())
                 .build();
     }
 
@@ -57,8 +57,8 @@ public class LangChain4jConfig {
                 .temperature(chat.getTemperature())
                 .maxTokens(chat.getMaxTokens())
                 .timeout(Duration.ofSeconds(chat.getTimeoutSeconds()))
-                .logRequests(true)
-                .logResponses(true)
+                .logRequests(chat.isLogRequests())
+                .logResponses(chat.isLogResponses())
                 .build();
     }
 
