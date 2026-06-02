@@ -38,7 +38,7 @@ infopilot:
     sse-timeout-seconds: ${CHAT_SSE_TIMEOUT:600}
 
   embedding:
-    base-url: ${EMBEDDING_BASE_URL}
+    base-url: ${EMBEDDING_BASE_URL:}
     api-key: ${EMBEDDING_API_KEY}
     model-name: ${EMBEDDING_MODEL:embedding-3}
 

@@ -54,6 +54,13 @@
                 <version>${langchain4j.version}-beta25</version>
             </dependency>
 
+            <!-- LangChain4j Tika 文档解析器 -->
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-document-parser-apache-tika</artifactId>
+                <version>${langchain4j.version}-beta25</version>
+            </dependency>
+
             <!-- MyBatis-Plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>

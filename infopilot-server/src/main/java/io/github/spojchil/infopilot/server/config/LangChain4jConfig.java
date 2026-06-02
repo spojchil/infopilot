@@ -78,16 +78,20 @@ public class LangChain4jConfig {
                 .build();
     }
 
-    /** 嵌入模型，用于文档和查询的向量化。当前使用智谱 embedding-3（2048 维）。{@link Lazy} 注解确保 PostgreSQL 未就绪时不会阻塞应用启动。 */
+    /**
+     * 嵌入模型，用于文档和查询的向量化。当前使用智谱 embedding-3（2048 维）。{@link Lazy} 注解确保 PostgreSQL 未就绪时不会阻塞应用启动。{@code
+     * baseUrl} 为空时不设，使用智谱 SDK 内置默认地址。
+     */
     @Bean
     @Lazy
     public EmbeddingModel embeddingModel() {
         var emb = props.getEmbedding();
-        return ZhipuAiEmbeddingModel.builder()
-                .baseUrl(emb.getBaseUrl())
-                .apiKey(emb.getApiKey())
-                .model(emb.getModelName())
-                .build();
+        var builder =
+                ZhipuAiEmbeddingModel.builder().apiKey(emb.getApiKey()).model(emb.getModelName());
+        if (emb.getBaseUrl() != null && !emb.getBaseUrl().isBlank()) {
+            builder.baseUrl(emb.getBaseUrl());
+        }
+        return builder.build();
     }
 
     /** PGVector 向量存储，连接与业务数据库相同的 PostgreSQL 实例。{@link Lazy} 原因同上。 */
