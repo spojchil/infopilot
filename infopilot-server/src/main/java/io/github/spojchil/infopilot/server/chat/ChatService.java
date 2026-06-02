@@ -118,8 +118,13 @@ public class ChatService {
                     @Override
                     public void onError(Throwable error) {
                         log.error("流式对话失败: sessionId={}", sessionId, error);
-                        emitter.completeWithError(
-                                new ApiException(CommonErrorCode.LLM_CALL_FAILED, error));
+                        try {
+                            emitter.send(
+                                    SseEmitter.event().name("error").data("抱歉，服务暂时不可用，请稍后重试。"));
+                            emitter.complete();
+                        } catch (IOException ignored) {
+                            // SSE 连接已断开，无需处理
+                        }
                     }
                 });
 

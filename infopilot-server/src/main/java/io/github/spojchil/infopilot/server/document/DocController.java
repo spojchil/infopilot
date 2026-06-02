@@ -33,9 +33,10 @@ public class DocController {
         try {
             int chunks = documentService.ingest(file.getInputStream(), fileName);
             return ApiResponse.success("上传完成: " + fileName + ", 切分为 " + chunks + " 个片段");
-        } catch (IOException e) {
-            throw e;
         } catch (Exception e) {
+            if (e instanceof IOException) {
+                throw (IOException) e;
+            }
             log.error("文档上传失败: fileName={}", fileName, e);
             return ApiResponse.failure(CommonErrorCode.EMBEDDING_FAILED);
         }
