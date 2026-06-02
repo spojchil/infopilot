@@ -70,8 +70,8 @@ public class ChatService {
      * @throws ApiException LLM 调用失败时抛出
      */
     public String chat(String sessionId, String userMessage) {
-        List<ChatMessage> messages = buildContext(sessionId, userMessage);
         try {
+            List<ChatMessage> messages = buildContext(sessionId, userMessage);
             ChatResponse response = chatModel.chat(messages);
             String reply = response.aiMessage().text();
             chatMemory.saveExchange(sessionId, userMessage, reply);
