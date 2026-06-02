@@ -4,8 +4,8 @@ import io.github.spojchil.infopilot.server.common.response.ApiResponse;
 import io.github.spojchil.infopilot.server.retrieval.RetrievalService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,12 +36,11 @@ public class DocController {
 
     /**
      * 文档检索问答。在已摄入文档中搜索相关内容，由 LLM 生成带来源引用的回答。
-     *
-     * @param q 用户问题
-     * @return 带来源引用的回答
      */
-    @GetMapping("/search")
-    public ApiResponse<String> search(@RequestParam String q) {
-        return ApiResponse.success(retrievalService.search(q));
+    @PostMapping("/search")
+    public ApiResponse<String> search(@RequestBody SearchRequest req) {
+        return ApiResponse.success(retrievalService.search(req.q()));
     }
+
+    record SearchRequest(String q) {}
 }

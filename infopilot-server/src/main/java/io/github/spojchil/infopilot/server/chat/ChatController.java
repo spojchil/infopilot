@@ -18,7 +18,7 @@ public class ChatController {
     private final ChatService chatService;
 
     /** 普通对话，等待模型完整回复后一次性返回。 */
-    @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
+    @PostMapping
     public ApiResponse<String> chat(@RequestBody ChatRequest request) {
         return ApiResponse.success(chatService.chat(request.sessionId(), request.message()));
     }
