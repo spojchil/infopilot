@@ -30,29 +30,35 @@ public class SlidingWindowChatMemory implements ChatMemory {
   public List<ChatMessage> loadHistory(String sessionId) {
     if (sessionId == null) return Collections.emptyList();
 
-    String key = KEY_PREFIX + sessionId + ":history";
-    List<String> jsonList = redis.opsForList().range(key, 0, -1);
-    if (jsonList == null || jsonList.isEmpty()) return Collections.emptyList();
+    try {
+      String key = KEY_PREFIX + sessionId + ":history";
+      List<String> jsonList = redis.opsForList().range(key, 0, -1);
+      if (jsonList == null || jsonList.isEmpty()) return Collections.emptyList();
 
-    List<ChatMessage> messages = new ArrayList<>();
-    for (String json : jsonList) {
-      try {
-        ChatMessageRecord record = objectMapper.readValue(json, ChatMessageRecord.class);
-        messages.add(record.toChatMessage());
-      } catch (JsonProcessingException e) {
-        log.warn("解析历史消息失败: sessionId={}, {}", sessionId, e.getMessage());
+      List<ChatMessage> messages = new ArrayList<>();
+      for (String json : jsonList) {
+        try {
+          ChatMessageRecord record = objectMapper.readValue(json, ChatMessageRecord.class);
+          messages.add(record.toChatMessage());
+        } catch (JsonProcessingException e) {
+          log.warn("解析历史消息失败: sessionId={}, {}", sessionId, e.getMessage());
+        }
       }
+      return messages;
+    } catch (Exception e) {
+      log.error("加载会话历史失败: sessionId={}", sessionId, e);
+      return Collections.emptyList();
     }
-    return messages;
   }
 
   @Override
   public void saveExchange(String sessionId, String userMessage, String assistantMessage) {
     if (sessionId == null) return;
 
-    String key = KEY_PREFIX + sessionId + ":history";
     try {
-      String userJson = objectMapper.writeValueAsString(new ChatMessageRecord("user", userMessage));
+      String key = KEY_PREFIX + sessionId + ":history";
+      String userJson =
+          objectMapper.writeValueAsString(new ChatMessageRecord("user", userMessage));
       String assistantJson =
           objectMapper.writeValueAsString(new ChatMessageRecord("assistant", assistantMessage));
 
@@ -61,6 +67,8 @@ public class SlidingWindowChatMemory implements ChatMemory {
       redis.expire(key, SESSION_TTL_HOURS, TimeUnit.HOURS);
     } catch (JsonProcessingException e) {
       log.error("序列化消息失败: sessionId={}", sessionId, e);
+    } catch (Exception e) {
+      log.error("保存会话历史失败: sessionId={}", sessionId, e);
     }
   }
 

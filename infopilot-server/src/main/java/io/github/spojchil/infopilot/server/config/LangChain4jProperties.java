@@ -21,6 +21,7 @@ public class LangChain4jProperties {
     private int timeoutSeconds = 600;
     private boolean logRequests = false;
     private boolean logResponses = false;
+    private int sseTimeoutSeconds = 600;
   }
 
   @Data

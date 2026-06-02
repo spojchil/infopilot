@@ -7,17 +7,16 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
+import io.github.spojchil.infopilot.server.config.LangChain4jProperties;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class ChatService {
 
   private static final String SYSTEM_PROMPT =
@@ -40,18 +39,35 @@ public class ChatService {
   private final ChatModel chatModel;
   private final StreamingChatModel streamingChatModel;
   private final ChatMemory chatMemory;
+  private final int sseTimeoutSeconds;
+
+  public ChatService(
+      ChatModel chatModel,
+      StreamingChatModel streamingChatModel,
+      ChatMemory chatMemory,
+      LangChain4jProperties props) {
+    this.chatModel = chatModel;
+    this.streamingChatModel = streamingChatModel;
+    this.chatMemory = chatMemory;
+    this.sseTimeoutSeconds = props.getChat().getSseTimeoutSeconds();
+  }
 
   public String chat(String sessionId, String userMessage) {
-    List<ChatMessage> messages = buildContext(sessionId, userMessage);
-    ChatResponse response = chatModel.chat(messages);
-    String reply = response.aiMessage().text();
-    chatMemory.saveExchange(sessionId, userMessage, reply);
-    return reply;
+    try {
+      List<ChatMessage> messages = buildContext(sessionId, userMessage);
+      ChatResponse response = chatModel.chat(messages);
+      String reply = response.aiMessage().text();
+      chatMemory.saveExchange(sessionId, userMessage, reply);
+      return reply;
+    } catch (Exception e) {
+      log.error("对话失败: sessionId={}", sessionId, e);
+      return "抱歉，服务暂时不可用，请稍后重试。";
+    }
   }
 
   public SseEmitter chatStream(String sessionId, String userMessage) {
     List<ChatMessage> messages = buildContext(sessionId, userMessage);
-    SseEmitter emitter = new SseEmitter(600_000L);
+    SseEmitter emitter = new SseEmitter(sseTimeoutSeconds * 1000L);
 
     streamingChatModel.chat(
         messages,
