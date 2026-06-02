@@ -34,6 +34,7 @@
 
         <!-- 插件 -->
         <spotless.version>3.5.1</spotless.version>
+        <aspectj.version>1.9.24</aspectj.version>
     </properties>
 
     <dependencyManagement>
