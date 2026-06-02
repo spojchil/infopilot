@@ -1,5 +1,6 @@
 package io.github.spojchil.infopilot.server.chat;
 
+import io.github.spojchil.infopilot.server.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,8 @@ public class ChatController {
 
     /** 普通对话，等待模型完整回复后一次性返回。 */
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
-    public String chat(@RequestBody ChatRequest request) {
-        return chatService.chat(request.sessionId(), request.message());
+    public ApiResponse<String> chat(@RequestBody ChatRequest request) {
+        return ApiResponse.success(chatService.chat(request.sessionId(), request.message()));
     }
 
     /** SSE 流式对话，每个 token 作为一个 {@code data:} 事件推送。 */

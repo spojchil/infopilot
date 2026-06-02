@@ -21,6 +21,12 @@ public class ApiException extends RuntimeException {
         this.message = message;
     }
 
+    public ApiException(ErrorCode errorCode, Throwable cause) {
+        super(errorCode.getMessage(), cause);
+        this.code = errorCode.getCode();
+        this.message = errorCode.getMessage();
+    }
+
     public ApiException(int code, String message, Throwable cause) {
         super(message, cause);
         this.code = code;
