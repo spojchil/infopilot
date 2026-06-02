@@ -24,67 +24,69 @@ import org.springframework.context.annotation.Lazy;
 @EnableConfigurationProperties(LangChain4jProperties.class)
 public class LangChain4jConfig {
 
-    private final LangChain4jProperties props;
+  private final LangChain4jProperties props;
 
-    @PostConstruct
-    void init() {
-        log.info("LangChain4j 模型已就绪: chat={}, embedding={}",
-                props.getChat().getModelName(), props.getEmbedding().getModelName());
-    }
+  @PostConstruct
+  void init() {
+    log.info(
+        "LangChain4j 模型已就绪: chat={}, embedding={}",
+        props.getChat().getModelName(),
+        props.getEmbedding().getModelName());
+  }
 
-    @Bean
-    public ChatModel chatModel() {
-        var chat = props.getChat();
-        return OpenAiChatModel.builder()
-                .baseUrl(chat.getBaseUrl())
-                .apiKey(chat.getApiKey())
-                .modelName(chat.getModelName())
-                .temperature(chat.getTemperature())
-                .maxTokens(chat.getMaxTokens())
-                .timeout(Duration.ofSeconds(chat.getTimeoutSeconds()))
-                .logRequests(chat.isLogRequests())
-                .logResponses(chat.isLogResponses())
-                .build();
-    }
+  @Bean
+  public ChatModel chatModel() {
+    var chat = props.getChat();
+    return OpenAiChatModel.builder()
+        .baseUrl(chat.getBaseUrl())
+        .apiKey(chat.getApiKey())
+        .modelName(chat.getModelName())
+        .temperature(chat.getTemperature())
+        .maxTokens(chat.getMaxTokens())
+        .timeout(Duration.ofSeconds(chat.getTimeoutSeconds()))
+        .logRequests(chat.isLogRequests())
+        .logResponses(chat.isLogResponses())
+        .build();
+  }
 
-    @Bean
-    public StreamingChatModel streamingChatModel() {
-        var chat = props.getChat();
-        return OpenAiStreamingChatModel.builder()
-                .baseUrl(chat.getBaseUrl())
-                .apiKey(chat.getApiKey())
-                .modelName(chat.getModelName())
-                .temperature(chat.getTemperature())
-                .maxTokens(chat.getMaxTokens())
-                .timeout(Duration.ofSeconds(chat.getTimeoutSeconds()))
-                .logRequests(chat.isLogRequests())
-                .logResponses(chat.isLogResponses())
-                .build();
-    }
+  @Bean
+  public StreamingChatModel streamingChatModel() {
+    var chat = props.getChat();
+    return OpenAiStreamingChatModel.builder()
+        .baseUrl(chat.getBaseUrl())
+        .apiKey(chat.getApiKey())
+        .modelName(chat.getModelName())
+        .temperature(chat.getTemperature())
+        .maxTokens(chat.getMaxTokens())
+        .timeout(Duration.ofSeconds(chat.getTimeoutSeconds()))
+        .logRequests(chat.isLogRequests())
+        .logResponses(chat.isLogResponses())
+        .build();
+  }
 
-    @Bean
-    @Lazy
-    public EmbeddingModel embeddingModel() {
-        var emb = props.getEmbedding();
-        return ZhipuAiEmbeddingModel.builder()
-                .baseUrl(emb.getBaseUrl())
-                .apiKey(emb.getApiKey())
-                .model(emb.getModelName())
-                .build();
-    }
+  @Bean
+  @Lazy
+  public EmbeddingModel embeddingModel() {
+    var emb = props.getEmbedding();
+    return ZhipuAiEmbeddingModel.builder()
+        .baseUrl(emb.getBaseUrl())
+        .apiKey(emb.getApiKey())
+        .model(emb.getModelName())
+        .build();
+  }
 
-    @Bean
-    @Lazy
-    public EmbeddingStore<TextSegment> embeddingStore() {
-        var vs = props.getVectorStore();
-        return PgVectorEmbeddingStore.builder()
-                .host(vs.getHost())
-                .port(vs.getPort())
-                .database(vs.getDatabase())
-                .user(vs.getUsername())
-                .password(vs.getPassword())
-                .table(vs.getTable())
-                .dimension(vs.getDimension())
-                .build();
-    }
+  @Bean
+  @Lazy
+  public EmbeddingStore<TextSegment> embeddingStore() {
+    var vs = props.getVectorStore();
+    return PgVectorEmbeddingStore.builder()
+        .host(vs.getHost())
+        .port(vs.getPort())
+        .database(vs.getDatabase())
+        .user(vs.getUsername())
+        .password(vs.getPassword())
+        .table(vs.getTable())
+        .dimension(vs.getDimension())
+        .build();
+  }
 }

@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class InfoPilotApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(InfoPilotApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(InfoPilotApplication.class, args);
+  }
 }

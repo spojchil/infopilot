@@ -5,5 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MapperScan("io.github.spojchil.infopilot.server.mapper")
-public class MybatisPlusConfig {
-}
+public class MybatisPlusConfig {}

@@ -35,6 +35,7 @@ infopilot:
     model-name: ${CHAT_MODEL}
     log-requests: ${CHAT_LOG_REQUESTS:false}
     log-responses: ${CHAT_LOG_RESPONSES:false}
+    sse-timeout-seconds: ${CHAT_SSE_TIMEOUT:600}
 
   embedding:
     base-url: ${EMBEDDING_BASE_URL}
