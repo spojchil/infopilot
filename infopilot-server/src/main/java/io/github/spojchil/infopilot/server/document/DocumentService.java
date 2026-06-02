@@ -7,6 +7,9 @@ import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.store.embedding.EmbeddingStore;
+import io.github.spojchil.infopilot.server.common.log.LogExecutionTime;
+import io.github.spojchil.infopilot.server.common.response.ApiException;
+import io.github.spojchil.infopilot.server.common.response.CommonErrorCode;
 import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ public class DocumentService {
      * @param fileName 原始文件名，作为元数据写入每个片段
      * @return 切分后的片段总数
      */
+    @LogExecutionTime(slowThresholdMs = 5000)
     public int ingest(InputStream inputStream, String fileName) {
         // 1. 解析：Tika 自动识别文件格式，提取纯文本
         Document document = new ApacheTikaDocumentParser().parse(inputStream);
@@ -97,9 +101,11 @@ public class DocumentService {
                     embeddings.addAll(future.get());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    throw new RuntimeException("嵌入任务被中断", e);
+                    throw new ApiException(
+                            CommonErrorCode.EMBEDDING_FAILED.getCode(), "嵌入任务被中断", e);
                 } catch (ExecutionException e) {
-                    throw new RuntimeException("嵌入任务执行失败", e.getCause());
+                    throw new ApiException(
+                            CommonErrorCode.EMBEDDING_FAILED.getCode(), "嵌入任务执行失败", e.getCause());
                 }
             }
         }

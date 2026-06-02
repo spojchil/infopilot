@@ -9,6 +9,7 @@ import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.output.Response;
 import dev.langchain4j.store.embedding.EmbeddingStore;
+import io.github.spojchil.infopilot.server.common.response.ApiException;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -29,11 +30,9 @@ import org.mockito.quality.Strictness;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class DocumentServiceTest {
 
-    @Mock
-    private EmbeddingModel embeddingModel;
+    @Mock private EmbeddingModel embeddingModel;
 
-    @Mock
-    private EmbeddingStore<TextSegment> embeddingStore;
+    @Mock private EmbeddingStore<TextSegment> embeddingStore;
 
     private DocumentService service;
 
@@ -41,14 +40,15 @@ class DocumentServiceTest {
     void setUp() {
         service = new DocumentService(embeddingModel, embeddingStore);
         when(embeddingModel.embedAll(anyList()))
-                .thenAnswer(inv -> {
-                    int size = inv.<List<?>>getArgument(0).size();
-                    List<Embedding> fake = new ArrayList<>();
-                    for (int i = 0; i < size; i++) {
-                        fake.add(new Embedding(new float[2048]));
-                    }
-                    return Response.from(fake);
-                });
+                .thenAnswer(
+                        inv -> {
+                            int size = inv.<List<?>>getArgument(0).size();
+                            List<Embedding> fake = new ArrayList<>();
+                            for (int i = 0; i < size; i++) {
+                                fake.add(new Embedding(new float[2048]));
+                            }
+                            return Response.from(fake);
+                        });
     }
 
     // ==================== 正常流程 ====================
@@ -120,18 +120,15 @@ class DocumentServiceTest {
     void nullFileNameThrows() {
         InputStream in = stream("测试文本");
 
-        assertThrows(IllegalArgumentException.class, () ->
-                service.ingest(in, null));
+        assertThrows(IllegalArgumentException.class, () -> service.ingest(in, null));
     }
 
     @Test
-    @DisplayName("ingest — 嵌入失败时异常向上传播")
+    @DisplayName("ingest — 嵌入失败时包装为 ApiException 向上传播")
     void embeddingFailurePropagates() {
-        when(embeddingModel.embedAll(anyList()))
-                .thenThrow(new RuntimeException("API 限流"));
+        when(embeddingModel.embedAll(anyList())).thenThrow(new RuntimeException("API 限流"));
 
-        assertThrows(RuntimeException.class, () ->
-                service.ingest(stream("测试文本"), "test.txt"));
+        assertThrows(ApiException.class, () -> service.ingest(stream("测试文本"), "test.txt"));
     }
 
     @Test
@@ -139,8 +136,7 @@ class DocumentServiceTest {
     void emptyFileThrows() {
         InputStream in = stream("");
 
-        assertThrows(Exception.class, () ->
-                service.ingest(in, "empty.txt"));
+        assertThrows(Exception.class, () -> service.ingest(in, "empty.txt"));
     }
 
     // ==================== 工具方法 ====================

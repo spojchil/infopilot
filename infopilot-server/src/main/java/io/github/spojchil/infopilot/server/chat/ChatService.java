@@ -7,6 +7,8 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
+import io.github.spojchil.infopilot.server.common.response.ApiException;
+import io.github.spojchil.infopilot.server.common.response.CommonErrorCode;
 import io.github.spojchil.infopilot.server.config.LangChain4jProperties;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +66,8 @@ public class ChatService {
      *
      * @param sessionId 可选，传入则维护多轮上下文
      * @param userMessage 用户输入
-     * @return AI 回复文本，异常时返回友好的降级提示
+     * @return AI 回复文本
+     * @throws ApiException LLM 调用失败时抛出
      */
     public String chat(String sessionId, String userMessage) {
         try {
@@ -74,8 +77,7 @@ public class ChatService {
             chatMemory.saveExchange(sessionId, userMessage, reply);
             return reply;
         } catch (Exception e) {
-            log.error("对话失败: sessionId={}", sessionId, e);
-            return "抱歉，服务暂时不可用，请稍后重试。";
+            throw new ApiException(CommonErrorCode.LLM_CALL_FAILED.getCode(), "对话服务暂不可用", e);
         }
     }
 
@@ -116,7 +118,13 @@ public class ChatService {
                     @Override
                     public void onError(Throwable error) {
                         log.error("流式对话失败: sessionId={}", sessionId, error);
-                        emitter.completeWithError(error);
+                        try {
+                            emitter.send(
+                                    SseEmitter.event().name("error").data("抱歉，服务暂时不可用，请稍后重试。"));
+                            emitter.complete();
+                        } catch (IOException ignored) {
+                            // SSE 连接已断开，无需处理
+                        }
                     }
                 });
 
