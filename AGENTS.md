@@ -70,25 +70,29 @@ docker compose up -d
 
 ## 代码风格
 
-- Java 代码遵循 Google Java Style Guide（通过 Spotless + google-java-format 自动格式化）
+- Java 代码遵循 AOSP 风格（Google Java Style Guide + 4 空格缩进，通过 Spotless 自动格式化）
 - MyBatis-Plus 的 BaseMapper 提供内置 CRUD，无需 XML。Entity 继承 BaseEntity（createTime / updateTime / deletedAt 自动填充）
 - 包结构按**职责**（chat / document / retrieval 等），而非按**层**（controller / service）
 - 配置类放在 `config/`，业务代码各司其职
 
 ### 注释
 
-注释是负债——代码改了注释没改就会说谎。写之前先问：
+注释帮助**人**理解代码。写之前先问：
 
-> **删掉这行注释，一个合格的开发者读代码会困惑吗？** 不会，就不写。
+> **删掉这行注释，同事能靠命名/注解/上下文理解这段代码吗？能，就不写。**
 
-| 该写 | 不该写 |
-|------|--------|
-| WHY — 为什么选这个方案而非另一个 | WHAT — 方法名已经说清楚的事 |
-| 反直觉的行为（"这个排序是反向的，因为……"） | 注解已表达的信息（`@Configuration` 不需要 "配置类"） |
-| 非显而易见的约束（"调用方负责关闭流"） | 分隔线 `// ====` — 说明类太长，应该拆 |
-| public API 的 `@throws` 和边界条件 | 每个类/方法都来一句 Javadoc 凑数 |
+| 应该写 | 不必写 |
+|--------|--------|
+| 类的设计选择（"为什么手动构建而非用 Starter"） | 字段名已说清的（`private String apiKey;` → `/** API 密钥 */`） |
+| public 方法的约束、副作用、降级策略 | 注解已表达的（`@TableField(fill = INSERT)` → `/** 插入时填充 */`） |
+| 字段的边界/单位/关联（"应略大于 timeoutSeconds"） | getter / setter / 简单委托 |
+| 字段值语义（`deletedAt` 的 `0` 表示未删除） | 一眼能懂的命名 |
+| 非显而易见的 WHY（"直接 new ObjectMapper 而非注入，因为 Spring Boot 4 移除了自动配置"） | 分隔线 `// ====` — 说明类太长应该拆 |
 
-Javadoc 只在被调方不看源码就不知道该怎么用时才需要——IDE 自动提示里能看到的信息，不需要再写一遍。
+核心原则：
+
+- **注释是增量信息。** 如果注释只是在用中文复读字段名或注解，删掉。
+- **一次性的非显而易见决策写在注释，反复出现的约定写在 AGENTS.md。**
 
 ## 测试规范
 
