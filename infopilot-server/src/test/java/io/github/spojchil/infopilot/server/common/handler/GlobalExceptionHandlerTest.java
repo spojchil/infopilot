@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @DisplayName("GlobalExceptionHandler 全局异常处理单元测试")
 class GlobalExceptionHandlerTest {
@@ -53,7 +52,8 @@ class GlobalExceptionHandlerTest {
     @Test
     @DisplayName("未知 Exception → 500 + INTERNAL_ERROR")
     void unknownExceptionReturns500() {
-        ResponseEntity<ApiResponse<Void>> resp = handler.handleUnknown(new RuntimeException("boom"));
+        ResponseEntity<ApiResponse<Void>> resp =
+                handler.handleUnknown(new RuntimeException("boom"));
 
         assertEquals(500, resp.getStatusCode().value());
         assertFalse(resp.getBody().isSuccess());
