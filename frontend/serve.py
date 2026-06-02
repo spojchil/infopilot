@@ -9,8 +9,9 @@ import urllib.error
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 3000
+DEFAULT_PORT = 3000
 BACKEND = "http://localhost:8080"
+PORT = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
 
 
 class ProxyHandler(http.server.SimpleHTTPRequestHandler):
@@ -41,14 +42,26 @@ class ProxyHandler(http.server.SimpleHTTPRequestHandler):
 
         try:
             with urllib.request.urlopen(req) as resp:
+                content_type = resp.headers.get("Content-Type", "text/plain")
                 self.send_response(resp.status)
-                self.send_header("Content-Type", resp.headers.get("Content-Type", "text/plain"))
+                self.send_header("Content-Type", content_type)
                 self.end_headers()
-                self.wfile.write(resp.read())
+                if "text/event-stream" in content_type:
+                    # SSE 流式转发，逐块写入，不缓冲
+                    while chunk := resp.read1(4096):
+                        self.wfile.write(chunk)
+                        self.wfile.flush()
+                else:
+                    self.wfile.write(resp.read())
         except urllib.error.HTTPError as e:
             self.send_response(e.code)
             self.end_headers()
             self.wfile.write(e.read())
+        except urllib.error.URLError as e:
+            self.send_response(502)
+            self.send_header("Content-Type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"Backend unreachable")
 
 
 with socketserver.TCPServer(("", PORT), ProxyHandler) as httpd:
