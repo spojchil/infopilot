@@ -12,6 +12,7 @@ import dev.langchain4j.store.embedding.EmbeddingStore;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +41,14 @@ class DocumentServiceTest {
     void setUp() {
         service = new DocumentService(embeddingModel, embeddingStore);
         when(embeddingModel.embedAll(anyList()))
-                .thenReturn(Response.from(List.of(new Embedding(new float[2048]))));
+                .thenAnswer(inv -> {
+                    int size = inv.<List<?>>getArgument(0).size();
+                    List<Embedding> fake = new ArrayList<>();
+                    for (int i = 0; i < size; i++) {
+                        fake.add(new Embedding(new float[2048]));
+                    }
+                    return Response.from(fake);
+                });
     }
 
     // ==================== 正常流程 ====================
